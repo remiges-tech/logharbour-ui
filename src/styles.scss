@@ -1,0 +1,230 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+
+:root {
+    --primary: #333333;
+    --meta-data: #333333;
+    --primary-text: #fff;
+    --white: #fff;
+    --background: #f9f9f9;
+    --text-color: #000;
+    --disabled-color: #777;
+  }
+  
+  [data-theme="dark"] {
+    --primary: rgb(16, 74, 161);
+    --meta-data: #7fc9ff;
+    --primary-text: #ffffff;
+    --white: #fff;
+    --background: #303030;
+    --text-color: #fff;
+    --disabled-color: #fff;
+  }
+
+  @font-face {
+    font-family: 'Gotham-Black';
+    src: url('./assets/font/Gotham-Font/Gotham-Black.otf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-Bold';
+    src: url('./assets/font/Gotham-Font/Gotham-Bold.otf');
+  }
+  
+  @font-face {
+    font-family: 'GothamBold';
+    src: url('./assets/font/Gotham-Font/GothamBold.ttf');
+  }
+  
+  @font-face {
+    font-family: 'GothamBoldItalic';
+    src: url('./assets/font/Gotham-Font/GothamBoldItalic.ttf');
+  }
+  
+  @font-face {
+    font-family: 'GothamBook';
+    src: url('./assets/font/Gotham-Font/GothamBook.ttf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-BookItalic';
+    src: url('./assets/font/Gotham-Font/Gotham-BookItalic.otf');
+  }
+  
+  @font-face {
+    font-family: 'GothamBookItalic';
+    src: url('./assets/font/Gotham-Font/GothamBookItalic.ttf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-Light';
+    src: url('./assets/font/Gotham-Font/Gotham-Light.otf');
+  }
+  
+  @font-face {
+    font-family: 'GothamLight';
+    src: url('./assets/font/Gotham-Font/GothamLight.ttf');
+  }
+  
+  @font-face {
+    font-family: 'GothamLightItalic';
+    src: url('./assets/font/Gotham-Font/GothamLightItalic.ttf');
+  }
+  
+  @font-face {
+    font-family: 'GothamMedium';
+    src: url('./assets/font/Gotham-Font/GothamMedium.ttf');
+  }
+  
+  @font-face {
+    font-family: 'GothamMedium_1';
+    src: url('./assets/font/Gotham-Font/GothamMedium_1.ttf');
+  }
+  
+  @font-face {
+    font-family: 'GothamMediumItalic';
+    src: url('./assets/font/Gotham-Font/GothamMediumItalic.ttf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-Thin';
+    src: url('./assets/font/Gotham-Font/Gotham-Thin.otf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-ThinItalic';
+    src: url('./assets/font/Gotham-Font/Gotham-ThinItalic.otf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-UltraItalic';
+    src: url('./assets/font/Gotham-Font/Gotham-UltraItalic.otf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-XLight';
+    src: url('./assets/font/Gotham-Font/Gotham-XLight.otf');
+  }
+  
+  @font-face {
+    font-family: 'Gotham-XLightItalic';
+    src: url('./assets/font/Gotham-Font/Gotham-XLightItalic.otf');
+  }
+  
+  /* fonts end */
+
+html,
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0;
+  height: 100%;
+  background-color: var(--background) !important;
+}
+
+body {
+  margin: 0;
+  font-family: "GothamBook", sans-serif;
+}
+
+.fa-sun {
+  font-size: 2rem;
+  color: var(--white);
+}
+
+.fa-moon {
+  font-size: 2rem;
+  color: var(--white);
+}
+
+.text-color {
+  color: var(--text-color);
+}
+
+.meta-data-color {
+  color: var(--meta-data-color)
+}
+
+.top-menu {
+  background-color: var(--primary);
+}
+
+.heading-color {
+  color: var(--primary);
+}
+
+.meta-data {
+  color: var(--meta-data);
+}
+
+.offcanvas {
+  background-color: var(--primary);
+  width: 80% !important;
+}
+
+.dropdown {
+  width: 250px;
+}
+
+.className{
+  margin-left: 20px;
+}
+
+.entity{
+  margin-left: 60px;
+}
+
+.field{
+  margin-left: 100px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-40 {
+  font-size: 40px;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-30 {
+  font-size: 30px;
+}
+
+.nav-link {
+  color: var(--meta-data);
+}
+
+.ng-select .ng-select-container {
+  background-color: var(--white);
+  border-radius: 10px !important;
+  outline: none !important;
+  color: var(--input-field) !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  padding: 3px 10px ;
+  height: 46px ;
+}
+
+.custom-input {
+  background-color: var(--white);
+  border-radius: 10px !important;
+  outline: 100px !important;
+  color: var(--input-field) !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  padding: 3px 10px ;
+  height: 36px ; 
+  border: 1px solid #cccccc;
+}
+
