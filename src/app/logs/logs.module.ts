@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DatachangeLogComponent } from './datachange-log/datachange-log.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     NgSelectModule,
     RouterModule
   ]

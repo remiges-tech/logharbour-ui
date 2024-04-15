@@ -7,6 +7,7 @@ import { LogsModule } from './logs/logs.module';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
