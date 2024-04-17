@@ -4,7 +4,7 @@ import { DatachangeLogComponent } from './datachange-log/datachange-log.componen
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 
 @NgModule({
@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
     DatachangeLogComponent
   ],
   imports: [
+    NgxJsonViewerModule,
     CommonModule,
     FormsModule,
     NgSelectModule,

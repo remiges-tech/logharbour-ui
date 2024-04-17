@@ -86,25 +86,25 @@
 
     <div class="buttons-group">
         <button type="button" class="btn btn-secondary">Reset</button>
-<button type="button" class="btn btn-primary mx-2">Submit</button>
+        <button type="button" class="btn btn-primary mx-2">Submit</button>
     </div>
 
     <div class="card my-3" *ngFor="let log of data">
         <div class="card-body">
+            <div class="row p-3">
+                <div class="col-6"><h5><strong>User: </strong> {{log.who}}</h5></div>
+                <div class="col-6"><h5><strong>Remote IP: </strong> {{log.remote_ip}}</h5></div>
+                <div class="col-6"><h5><strong>Operation: </strong> {{log.data.op}}</h5></div>
+                <div class="col-6"><h5><strong>Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
+                <div class="col-12"><h5><strong>Description: </strong> {{log.msg}}</h5></div>
+            </div>
             <div class="card no-border m-2" *ngFor="let dataChangeLog of log.data.changes">
-                <div class="card-title">
-                    <h2 class="p-2"><strong>{{dataChangeLog.field}}</strong></h2>
+                <div class="card-title mt-2">
+                    <h4 class="p-2"><strong>Field Name: </strong> {{dataChangeLog.field}}</h4>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6"><strong>Old_Value :</strong> {{dataChangeLog.old_value}}</div>
-                        <div class="col-6"><strong>Timestamp :</strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6"><strong>New_Value :</strong> {{dataChangeLog.new_value}}</div>
-                        <div class="col-6"><strong>Timestamp :</strong> {{log.when |date:'MMM d, y, h:mm:ss a'}}</div>
-                    </div>
-                    
+                <div class="card-body pt-0">
+                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="dataChangeLog.old_value" [expanded]="false"></ngx-json-viewer></div>
+                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="dataChangeLog.new_value" [expanded]="false"></ngx-json-viewer></div>
                 </div>
             </div>
         </div>
