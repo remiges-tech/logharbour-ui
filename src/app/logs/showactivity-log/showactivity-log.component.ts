@@ -1,51 +1,47 @@
+import { Component } from '@angular/core';
+import { ActivityChangeLogs } from 'src/models/common-interfaces';
 
-import { Component, inject } from '@angular/core';
-import { DataChangeLogs } from 'src/models/common-interfaces';
-import { DataChangeLogResp } from 'src/models/request-response-interfaces';
-import { CommonService } from 'src/services/common.service';
-import { CONSTANTS } from 'src/services/constants.service';
-import { DatachangeLogService } from 'src/services/datachange-log.service';
-
-interface SelectedDataInterface{
+interface SelectedDataInterface {
   apps: string | undefined,
   class?: string | undefined,
   users?: string | undefined,
   entityId?: string | undefined,
-  fields?: string | undefined,
+  search_after_timestamp?: string | undefined,
+  search_after_doc_id?: string | undefined,
   days: number | 0
 }
+
 @Component({
-  selector: 'app-datachange-log',
-  templateUrl: './datachange-log.component.html',
-  styleUrls: ['./datachange-log.component.scss']
+  selector: 'app-showactivity-log',
+  templateUrl: './showactivity-log.component.html',
+  styleUrls: ['./showactivity-log.component.scss']
 })
-export class DatachangeLogComponent {
-  fileName: string = 'DatachangeLogComponent';
-  private _dataChangeLogService = inject(DatachangeLogService);
-  private _commonService = inject(CommonService);
+
+
+export class ShowactivityLogComponent {
   appsList: string[] = ['BSE', 'NSE', 'NSDL', 'NDML']
   classList: string[] = ['UCC', 'AMC']
   usersList: string[] = ['ABC', 'XYZ', 'DFE']
 
-  selectedData:SelectedDataInterface = {
+  selectedData: SelectedDataInterface = {
     apps: undefined,
     days: 0
   }
 
-  data: DataChangeLogs[] = [{
-    app: "crux",
-    system: "DESKTOP-6P0BUCF",
-    module: "",
-    type: "C",
-    pri: "Info",
+  data: ActivityChangeLogs[] = [{
     when: "2024-04-15T05:40:38.6600928Z",
-    who: "",
-    op: "",
-    class: "ruleset",
-    instance: "\b",
+    who: "jim",
+    app: "OnlineStore",
+    system: "server1",
+    module: "Orders",
+    op: "Update",
+    type: "A",
+    class: "Order",
+    instance_id: 456,
     status: "Success",
+    error: "server-error",
     remote_ip: "203.0.113.45",
-    msg: "Updated ruleset",
+    msg: "Order updated successfully",
     data: {
       entity: "ruleset",
       op: "Update",
@@ -68,19 +64,19 @@ export class DatachangeLogComponent {
       ]
     }
   },{
-    app: "crux",
-    system: "DESKTOP-6P0BUCF",
-    module: "",
-    type: "C",
-    pri: "Info",
     when: "2024-04-15T05:40:38.6600928Z",
-    who: "",
-    op: "",
-    class: "ruleset",
-    instance: "\b",
+    who: "jim",
+    app: "OnlineStore",
+    system: "server1",
+    module: "Orders",
+    op: "Update",
+    type: "A",
+    class: "Order",
+    instance_id: 456,
     status: "Success",
+    error: "server-error",
     remote_ip: "203.0.113.45",
-    msg: "Updated ruleset",
+    msg: "Order updated successfully",
     data: {
       entity: "ruleset",
       op: "Update",
@@ -105,6 +101,7 @@ export class DatachangeLogComponent {
   }]
 
 
+
   getTypeOfValue(value:string){
     try{
       return JSON.parse(value)
@@ -112,5 +109,4 @@ export class DatachangeLogComponent {
       return value
     }
   }
-
 }

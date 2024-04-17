@@ -6,7 +6,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" class="dropdown" id="app" placeholder="--Select App--">
+                    <ng-select class="dropdown" [(ngModel)]="selectedData.apps" id="app" placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
@@ -42,20 +42,30 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2 field">
+        <!-- <div class="row mt-2 field">
             <div class="col-8">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Field</label>
+                        <label class="fs-20 fw-600 ml-3 text-color">Doc ID</label>
                     </div>
                     <div class="col-3">
-                        <ng-select class="dropdown" id="field" placeholder="--Select Field--">
-                            <ng-option></ng-option>
-                        </ng-select>
+                        <input type="text" class="dropdown custom-input" id="doc_id" placeholder="--Doc ID--" min="1">
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row mt-2 timestamp">
+            <div class="col-8">
+                <div class="d-flex flex-column flex-md-row">
+                    <div class="col-3">
+                        <label class="fs-20 fw-600 ml-3 text-color">Timestamp</label>
+                    </div>
+                    <div class="col-3">
+                       
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </div>
     <div class="row mt-4">
         <div class="col-8">
@@ -92,19 +102,29 @@
     <div class="card my-3" *ngFor="let log of data">
         <div class="card-body">
             <div class="row p-3">
-                <div class="col-6"><h5><strong>User: </strong> {{log.who}}</h5></div>
-                <div class="col-6"><h5><strong>Remote IP: </strong> {{log.remote_ip}}</h5></div>
-                <div class="col-6"><h5><strong>Operation: </strong> {{log.data.op}}</h5></div>
-                <div class="col-6"><h5><strong>Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
-                <div class="col-12"><h5><strong>Description: </strong> {{log.msg}}</h5></div>
+                <div class="col-6">
+                    <h5><strong>User: </strong>{{log.who}}</h5>
+                </div>
+                <div class="col-6">
+                    <h5><strong>Remote IP: </strong>{{log.remote_ip}}</h5>
+                </div>
+                <div class="col-6">
+                    <h5><strong>Operation: </strong>{{log.op}}</h5>
+                </div>
+                <div class="col-6">
+                    <h5><strong>Timestamp: </strong>{{log.when | date:'MMM d, y, h:mm:ss a'}}</h5>
+                </div>
+                <div class="col-12">
+                    <h5><strong>Description: </strong>{{log.msg}}</h5>
+                </div>
             </div>
-            <div class="card no-border m-2" *ngFor="let dataChangeLog of log.data.changes">
+            <div class="card no-border m-2"  *ngFor="let activityChangeLog of log.data.changes">
                 <div class="card-title mt-2">
-                    <h4 class="p-2"><strong>Field Name: </strong> {{dataChangeLog.field}}</h4>
+                    <h4 class="p-2"><strong>Field Name: </strong>{{activityChangeLog.field}}</h4>
                 </div>
                 <div class="card-body pt-0">
-                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="dataChangeLog.old_value" [expanded]="false"></ngx-json-viewer></div>
-                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="dataChangeLog.new_value" [expanded]="false"></ngx-json-viewer></div>
+                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="activityChangeLog.old_value" [expanded]="false">{{activityChangeLog.old_value}}</ngx-json-viewer></div>
+                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="activityChangeLog.new_value" [expanded]="false">{{activityChangeLog.new_value}}</ngx-json-viewer></div>
                 </div>
             </div>
         </div>

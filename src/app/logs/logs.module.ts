@@ -5,15 +5,21 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
+import { ShowactivityLogComponent } from './showactivity-log/showactivity-log.component';
+import { LogsRoutingModule } from './logs-routing.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
   declarations: [
-    DatachangeLogComponent
+    DatachangeLogComponent,
+    ShowactivityLogComponent
   ],
   imports: [
     NgxJsonViewerModule,
+    LogsRoutingModule,
     CommonModule,
+    NgxPaginationModule,
     FormsModule,
     NgSelectModule,
     RouterModule

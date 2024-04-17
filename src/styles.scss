@@ -181,6 +181,10 @@ body {
   margin-left: 100px;
 }
 
+.timestamp{
+  margin-left: 140px;
+}
+
 .fs-20 {
   font-size: 20px;
 }
@@ -227,4 +231,11 @@ body {
   height: 36px ; 
   border: 1px solid #cccccc;
 }
+
+.no-border{
+  border: 0;
+  background-color: rgb(232, 232, 232);
+}
+
+
 

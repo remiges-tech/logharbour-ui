@@ -4,21 +4,22 @@
       <div class="mb-0 me-2">
         <img alt="Remiges Business Icon" src="assets/img/logo.svg" />
       </div>
-      <span  class="h2 mb-0 text-light">LogHarbour</span>
+      <span class="h2 mb-0 text-light">LogHarbour</span>
     </div>
-    <div class="d-none d-lg-flex d-xl-flex d-md-flex">
+    <div class="d-flex align-items-center ms-auto d-none d-lg-flex d-xl-flex d-md-flex">
+      <a routerLink="/showactivity-log" class="text-light me-3 fs-20 fw-600" type="click">Activity Log</a>
       <div class="mx-3">
         <button class="btn" id="themeBtn" (click)="changeTheme()">
           <i *ngIf="isDarkTheme" class="fa-regular fa-sun"></i>
           <i *ngIf="!isDarkTheme" class="fa-solid fa-moon"></i>
         </button>
       </div>
-      <div class="gradient-box">
-      </div>
+      <!-- <div class="gradient-box">
+      </div> -->
     </div>
     <button class="btn d-xl-none d-md-none d-lg-none" type="button" data-bs-toggle="offcanvas"
       data-bs-target="#offcanvas" aria-controls="offcanvas">
-      <i class="fas fa-bars"></i>
+      <i class="fas fa-bars text-white"></i>
     </button>
   </div>
 </nav>
@@ -38,7 +39,10 @@
         <i *ngIf="!isDarkTheme" class="fa-solid fa-moon"></i>
       </button>
     </div>
-    <div class="gradient-box">
+    <!-- <div class="gradient-box">
+    </div> -->
+    <div class="mt-2">
+      <button type="button" [routerLink]="['/showactivity-log']" class="btn btn-light">Activity Log</button>
     </div>
   </div>
 </div>
