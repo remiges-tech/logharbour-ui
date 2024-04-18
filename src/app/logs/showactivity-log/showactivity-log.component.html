@@ -13,60 +13,6 @@
             </div>
         </div>
     </div>
-    <div class="hidden-group" *ngIf="selectedData.apps != undefined">
-        <div class="row mt-2 className">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Class</label>
-                    </div>
-                    <div class="col-5 ml-3">
-                        <ng-select class="dropdown" id="class" placeholder="--Select Class--">
-                            <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2 entity">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
-                    </div>
-                    <div class="col-3">
-                        <ng-select class="dropdown" id="entity" placeholder="--Select Entity ID--">
-                            <ng-option></ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="row mt-2 field">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Doc ID</label>
-                    </div>
-                    <div class="col-3">
-                        <input type="text" class="dropdown custom-input" id="doc_id" placeholder="--Doc ID--" min="1">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2 timestamp">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Timestamp</label>
-                    </div>
-                    <div class="col-3">
-                       
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    </div>
     <div class="row mt-4">
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
@@ -93,12 +39,59 @@
             </div>
         </div>
     </div>
-
-    <div class="mt-4">
-        <a type="click" class="fs-20 fw-600" >Reset</a>
-        <a type="click" class=" fs-20 fw-600 mx-4">Submit</a>
+    <!--------------Filters section------------------>
+    <div class="mt-4 pointer" (click)="toggleFilters()">
+        <div class="line" *ngIf="!showFilters">
+            &#9656;<span>Filters</span>
+        </div>
+        <div class="line" *ngIf="showFilters">
+            &#9662;<span>Filters</span>
+        </div>
     </div>
-
+    <div class="row" *ngIf="showFilters">
+        <div class="col-4">
+            <div class="d-flex flex-column flex-md-row">
+                <div class="col-2">
+                    <label class="fs-20 fw-600 ml-3 text-color">Class</label>
+                </div>
+                <div class="col-2 ml-3">
+                    <ng-select class="dropdown" id="class" placeholder="--Select Class--">
+                        <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="d-flex flex-column flex-md-row">
+                <div class="col-3">
+                    <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
+                </div>
+                <div class="col-3">
+                    <ng-select class="dropdown" id="entity" placeholder="--Select Entity ID--">
+                        <ng-option></ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="d-flex flex-column flex-md-row">
+                <div class="col-3">
+                    <label class="fs-20 fw-600 ml-3 text-color">Doc ID</label>
+                </div>
+                <div class="col-3">
+                    <input type="text" class="dropdown custom-input" id="doc_id" placeholder="--Doc ID--" min="1">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------Submit & Reset section------------>
+    <div class="mt-4">
+        <a type="click" class="fs-20 fw-600 pointer">Reset</a>
+        <a type="click" class=" fs-20 fw-600 mx-4 pointer">Submit</a>
+        <i class="fa fa-check green-icon fs-20 mx-2" aria-hidden="true"></i>
+        <a type="click" class="fs-20 fw-600 pointer">Apply</a>
+    </div>
+    <!-------Detail View Section------------>
     <div class="card my-3" *ngFor="let log of data">
         <div class="card-body">
             <div class="row p-3">
@@ -118,13 +111,15 @@
                     <h5><strong>Description: </strong>{{log.msg}}</h5>
                 </div>
             </div>
-            <div class="card no-border m-2"  *ngFor="let activityChangeLog of log.data.changes">
+            <div class="card no-border m-2" *ngFor="let activityChangeLog of log.data.changes">
                 <div class="card-title mt-2">
                     <h4 class="p-2"><strong>Field Name: </strong>{{activityChangeLog.field}}</h4>
                 </div>
                 <div class="card-body pt-0">
-                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="activityChangeLog.old_value" [expanded]="false">{{activityChangeLog.old_value}}</ngx-json-viewer></div>
-                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="activityChangeLog.new_value" [expanded]="false">{{activityChangeLog.new_value}}</ngx-json-viewer></div>
+                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="activityChangeLog.old_value"
+                            [expanded]="false">{{activityChangeLog.old_value}}</ngx-json-viewer></div>
+                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="activityChangeLog.new_value"
+                            [expanded]="false">{{activityChangeLog.new_value}}</ngx-json-viewer></div>
                 </div>
             </div>
         </div>

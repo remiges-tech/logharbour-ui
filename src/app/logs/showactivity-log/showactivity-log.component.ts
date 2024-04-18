@@ -22,6 +22,7 @@ export class ShowactivityLogComponent {
   appsList: string[] = ['BSE', 'NSE', 'NSDL', 'NDML']
   classList: string[] = ['UCC', 'AMC']
   usersList: string[] = ['ABC', 'XYZ', 'DFE']
+  showFilters: boolean = false;
 
   selectedData: SelectedDataInterface = {
     apps: undefined,
@@ -63,7 +64,7 @@ export class ShowactivityLogComponent {
         }
       ]
     }
-  },{
+  }, {
     when: "2024-04-15T05:40:38.6600928Z",
     who: "jim",
     app: "OnlineStore",
@@ -101,12 +102,16 @@ export class ShowactivityLogComponent {
   }]
 
 
-
-  getTypeOfValue(value:string){
-    try{
+  getTypeOfValue(value: string) {
+    try {
       return JSON.parse(value)
-    }catch(err){
+    } catch (err) {
       return value
     }
+  }
+
+
+  toggleFilters(): void {
+    this.showFilters = !this.showFilters;
   }
 }
