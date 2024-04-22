@@ -6,7 +6,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" class="dropdown" id="app" placeholder="--Select App--">
+                    <ng-select [(ngModel)]="selectedData.apps" (change)="getDropdownsValue('class');getDropdownsValue('instance'); getDropdownsValue('field'); getDropdownsValue('who')" class="dropdown" id="app" placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
@@ -21,7 +21,7 @@
                         <label class="fs-20 fw-600 ml-3 text-color">Class</label>
                     </div>
                     <div class="col-5 ml-3">
-                        <ng-select class="dropdown" id="class" placeholder="--Select Class--">
+                        <ng-select [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
                             <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
                         </ng-select>
                     </div>
@@ -35,8 +35,8 @@
                         <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
                     </div>
                     <div class="col-3">
-                        <ng-select class="dropdown" id="entity" placeholder="--Select Entity ID--">
-                            <ng-option></ng-option>
+                        <ng-select [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
+                            <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
                         <label class="fs-20 fw-600 ml-3 text-color">Field</label>
                     </div>
                     <div class="col-3">
-                        <ng-select class="dropdown" id="field" placeholder="--Select Field--">
-                            <ng-option></ng-option>
+                        <ng-select [(ngModel)]="selectedData.fields" class="dropdown" id="field" placeholder="--Select Field--">
+                            <ng-option [value]="field" *ngFor="let field of fieldList">{{field}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Days</label>
                 </div>
                 <div class="col-3">
-                    <input type="number" class="dropdown custom-input" id="days" placeholder="--Days--" min="1">
+                    <input [(ngModel)]="selectedData.days" type="number" class="dropdown custom-input" id="days" placeholder="--Days--" min="1">
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">User</label>
                 </div>
                 <div class="col-3">
-                    <ng-select class="dropdown" id="user" placeholder="--Select User--">
+                    <ng-select [(ngModel)]="selectedData.users" class="dropdown" id="user" placeholder="--Select User--">
                         <ng-option [value]="user" *ngFor="let user of usersList">{{user}}</ng-option>
                     </ng-select>
                 </div>
@@ -85,11 +85,11 @@
     </div>
 
     <div class="mt-4">
-        <a type="click" class="fs-20 fw-600" >Reset</a>
-        <a type="click" class=" fs-20 fw-600 mx-4">Submit</a>
+        <a type="click" class="fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</a>
+        <a type="click" class=" fs-20 fw-600 mx-4 pointer" (click)="getDataChangeLogs()">Submit</a>
     </div>
 
-    <div class="card my-3" *ngFor="let log of data">
+    <div class="card my-3" *ngFor="let log of dataChangeLogs">
         <div class="card-body">
             <div class="row p-3">
                 <div class="col-6"><h5><strong>User: </strong> {{log.who}}</h5></div>

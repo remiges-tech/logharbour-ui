@@ -3,22 +3,43 @@ import { environment } from 'src/environments/environment.development';
 import { HttpService } from './http.service';
 import * as Enums from './constants.service';
 import { CommonService } from './common.service';
-import { DataChangeLogReq } from 'src/models/request-interfaces';
+import { GetSetReq } from 'src/models/request-interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DatachangeLogService {
-  fileName: string = 'SchemaService'
+export class ApiCommonService {
+  fileName:string = 'ApiCommonService'
   _httpService = inject(HttpService);
   _commonService = inject(CommonService);
+
   constructor() { }
 
-  getDataChangeLog(req:DataChangeLogReq): any {
+  getAppsList(): any {
+    try {
+      let dataObj = {
+        method: 'get',
+        api_url: environment.apiUrl + Enums.CONSTANTS.GET_APPS_LIST,
+        local_json_file: '',
+        param_data: {},
+        mapcol: false,
+      };
+      let resp = this._httpService.fetchData(dataObj);
+      return resp;
+    } catch (error) {
+      this._commonService.log({
+        fileName: this.fileName,
+        functionName: 'getAppsList',
+        msg: error
+      });
+    }
+  }
+
+  getSetList(req:GetSetReq): any {
     try {
       let dataObj = {
         method: 'post',
-        api_url: environment.apiUrl + Enums.CONSTANTS.DATA_CHANGE_LOG_API,
+        api_url: environment.apiUrl + Enums.CONSTANTS.GET_SET_LIST,
         local_json_file: '',
         param_data: req,
         mapcol: false,
@@ -28,7 +49,7 @@ export class DatachangeLogService {
     } catch (error) {
       this._commonService.log({
         fileName: this.fileName,
-        functionName: 'getDataChangeLog',
+        functionName: 'getSetList',
         msg: error
       });
     }

@@ -6,7 +6,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select class="dropdown" [(ngModel)]="selectedData.apps" id="app" placeholder="--Select App--">
+                    <ng-select class="dropdown" [(ngModel)]="selectedData.apps" id="app" (change)="getDropdownsValue('class');getDropdownsValue('instance');getDropdownsValue('who')" placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
@@ -20,7 +20,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Days</label>
                 </div>
                 <div class="col-3">
-                    <input type="number" class="dropdown custom-input" id="days" placeholder="--Days--" min="1">
+                    <input type="number" [(ngModel)]="selectedData.days" class="dropdown custom-input" id="days" placeholder="--Days--" min="1">
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">User</label>
                 </div>
                 <div class="col-3">
-                    <ng-select class="dropdown" id="user" placeholder="--Select User--">
+                    <ng-select [(ngModel)]="selectedData.users" class="dropdown" id="user" placeholder="--Select User--">
                         <ng-option [value]="user" *ngFor="let user of usersList">{{user}}</ng-option>
                     </ng-select>
                 </div>
@@ -55,7 +55,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Class</label>
                 </div>
                 <div class="col-2 ml-3">
-                    <ng-select class="dropdown" id="class" placeholder="--Select Class--">
+                    <ng-select [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
                         <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
                     </ng-select>
                 </div>
@@ -67,13 +67,13 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
                 </div>
                 <div class="col-3">
-                    <ng-select class="dropdown" id="entity" placeholder="--Select Entity ID--">
-                        <ng-option></ng-option>
+                    <ng-select [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
+                        <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
                     </ng-select>
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <!-- <div class="col-4">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
                     <label class="fs-20 fw-600 ml-3 text-color">Doc ID</label>
@@ -82,17 +82,15 @@
                     <input type="text" class="dropdown custom-input" id="doc_id" placeholder="--Doc ID--" min="1">
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <!------Submit & Reset section------------>
     <div class="mt-4">
-        <a type="click" class="fs-20 fw-600 pointer">Reset</a>
-        <a type="click" class=" fs-20 fw-600 mx-4 pointer">Submit</a>
-        <i class="fa fa-check green-icon fs-20 mx-2" aria-hidden="true"></i>
-        <a type="click" class="fs-20 fw-600 pointer">Apply</a>
+        <a type="click" class="fs-20 fw-600 pointer" (click)="resetHandler()">Reset</a>
+        <a type="click" class=" fs-20 fw-600 mx-4 pointer" (click)="getActivityLogs()">Submit</a>
     </div>
     <!-------Detail View Section------------>
-    <div class="card my-3" *ngFor="let log of data">
+    <div class="card my-3" *ngFor="let log of activityLogs">
         <div class="card-body">
             <div class="row p-3">
                 <div class="col-6">
@@ -111,15 +109,10 @@
                     <h5><strong>Description: </strong>{{log.msg}}</h5>
                 </div>
             </div>
-            <div class="card no-border m-2" *ngFor="let activityChangeLog of log.data.changes">
-                <div class="card-title mt-2">
-                    <h4 class="p-2"><strong>Field Name: </strong>{{activityChangeLog.field}}</h4>
-                </div>
+            <div class="card no-border m-2">
                 <div class="card-body pt-0">
-                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="activityChangeLog.old_value"
-                            [expanded]="false">{{activityChangeLog.old_value}}</ngx-json-viewer></div>
-                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="activityChangeLog.new_value"
-                            [expanded]="false">{{activityChangeLog.new_value}}</ngx-json-viewer></div>
+                    <div><strong>Activity Log :</strong> <ngx-json-viewer [json]="log.data.activitylog"
+                            [expanded]="false"></ngx-json-viewer></div>
                 </div>
             </div>
         </div>

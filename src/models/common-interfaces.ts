@@ -27,31 +27,23 @@ export interface DataChangeLogChanges {
   new_value: string
 }
 
-export interface ActivityChangeLogs {
-  when: string,
-  who: string,
-  app: string,
-  system: string,
-  module: string,
-  op: string,
-  type: string,
-  class: string,
-  instance_id: number,
-  status: string,
-  error: string,
-  remote_ip: string,
-  msg: string,
-  data: ActivityChangeLogData
+export interface ActivityLogs {
+  app: string;
+    system: string;
+    module: string;
+    type: string;
+    pri: string;
+    when: string;
+    who: string;
+    op: string;
+    class: string;
+    instance: string;
+    status: number;
+    remote_ip: string;
+    msg: string;
+    data: ActivityLogData;
 }
 
-export interface ActivityChangeLogData {
-  entity: string,
-  op: string,
-  changes: ActivityChangeLogChanges[]
-}
-
-export interface ActivityChangeLogChanges {
-  field: string,
-  old_value: string,
-  new_value: string
+export interface ActivityLogData {
+  activitylog: string;
 }
