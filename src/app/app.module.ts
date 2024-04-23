@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './logs/page-not-found/page-not-found.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
@@ -16,6 +18,7 @@ import { PageNotFoundComponent } from './logs/page-not-found/page-not-found.comp
     AppComponent,
     TopMenuComponent,
     PageNotFoundComponent,
+    LoaderComponent,
   ],
   imports: [
     NgSelectModule,
@@ -23,7 +26,8 @@ import { PageNotFoundComponent } from './logs/page-not-found/page-not-found.comp
     AppRoutingModule,
     LogsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

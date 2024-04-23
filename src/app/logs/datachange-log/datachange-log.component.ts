@@ -1,5 +1,6 @@
 
 import { Component, inject } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { DataChangeLogs } from 'src/models/common-interfaces';
 import { DataChangeLogReq, GetSetReq } from 'src/models/request-interfaces';
 import { AppListResp, DataChangeLogResp, GetSetListResp } from 'src/models/response-interfaces';
@@ -26,6 +27,7 @@ export class DatachangeLogComponent {
   private _dataChangeLogService = inject(DatachangeLogService);
   private _apiCommonService = inject(ApiCommonService);
   private _commonService = inject(CommonService);
+  private _toastr = inject(ToastrService);
   selectedData:SelectedDataInterface = {
     apps: undefined,
     days: 5
@@ -124,14 +126,17 @@ export class DatachangeLogComponent {
 
   getAppsList(){
     try {
+      this._commonService.showLoader();
       this._apiCommonService.getAppsList().subscribe((res:AppListResp) => {
+        this._commonService.hideLoader();
         if(res.status == CONSTANTS.SUCCESS){
           this.appsList = res.data
         }else{
-          // Toast here
+          this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       })
     } catch (error) {
+      this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
         functionName: 'getAppsList',
@@ -152,7 +157,9 @@ export class DatachangeLogComponent {
           setAttr: field
         }
       }
+      this._commonService.showLoader();
       this._apiCommonService.getSetList(req).subscribe((res:GetSetListResp) => {
+        this._commonService.hideLoader();
         if(res.status == CONSTANTS.SUCCESS){
           switch(field){
             case 'class' : this.classList = res.data
@@ -165,10 +172,11 @@ export class DatachangeLogComponent {
             break;
           }
         }else{
-          // Toast Here
+          this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       })
     } catch (error) {
+      this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
         functionName: 'getDropdownsValue',
@@ -220,7 +228,9 @@ export class DatachangeLogComponent {
         req.data.class = this.selectedData.class
       }
 
+      this._commonService.showLoader();
       this._dataChangeLogService.getDataChangeLog(req).subscribe((res:DataChangeLogResp) => {
+        this._commonService.hideLoader();
         if(res.status == CONSTANTS.SUCCESS){
           // Parse old_value and new_value
           res.data.logs.forEach(log => {
@@ -232,11 +242,11 @@ export class DatachangeLogComponent {
           // Assign updated logsvalue to the variable
           this.dataChangeLogs = res.data.logs
         }else{
-          // Toast Here
+          this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
-      })
-      
+      }) 
     } catch (error) {
+      this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
         functionName: 'getDataChangeLogs',

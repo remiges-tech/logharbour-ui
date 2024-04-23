@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ActivityLogs } from 'src/models/common-interfaces';
 import { ActivityLogReq, GetSetReq } from 'src/models/request-interfaces';
 import { ActivityLogResp, AppListResp, GetSetListResp } from 'src/models/response-interfaces';
@@ -26,6 +27,7 @@ export class ShowactivityLogComponent {
   private _activityLogService = inject(ActivityLogService);
   private _apiCommonService = inject(ApiCommonService);
   private _commonService = inject(CommonService);
+  private _toastr = inject(ToastrService);
   selectedData: SelectedDataInterface = {
     apps: undefined,
     days: 5
@@ -120,14 +122,17 @@ export class ShowactivityLogComponent {
 
   getAppsList() {
     try {
+      this._commonService.showLoader();
       this._apiCommonService.getAppsList().subscribe((res: AppListResp) => {
+        this._commonService.hideLoader();
         if (res.status == CONSTANTS.SUCCESS) {
           this.appsList = res.data
         } else {
-          // Toast here
+          this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       })
     } catch (error) {
+      this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
         functionName: 'getAppsList',
@@ -148,7 +153,9 @@ export class ShowactivityLogComponent {
           setAttr: field
         }
       }
+      this._commonService.showLoader();
       this._apiCommonService.getSetList(req).subscribe((res: GetSetListResp) => {
+        this._commonService.hideLoader();
         if (res.status == CONSTANTS.SUCCESS) {
           switch (field) {
             case 'class': this.classList = res.data
@@ -159,10 +166,11 @@ export class ShowactivityLogComponent {
               break;
           }
         } else {
-          // Toast Here
+          this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       })
     } catch (error) {
+      this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
         functionName: 'getDropdownsValue',
@@ -209,15 +217,18 @@ export class ShowactivityLogComponent {
         req.data.class = this.selectedData.class
       }
 
+      this._commonService.showLoader();
       this._activityLogService.getActivityLogs(req).subscribe((res: ActivityLogResp) => {
+        this._commonService.hideLoader();
         if (res.status == CONSTANTS.SUCCESS) {
           this.activityLogs = res.data.LogEntery
         } else {
-          // Toast Here
+          this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       })
 
     } catch (error) {
+      this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
         functionName: 'getActivityLogs',

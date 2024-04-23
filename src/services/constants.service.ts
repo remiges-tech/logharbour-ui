@@ -8,4 +8,5 @@ export enum CONSTANTS {
   GET_SET_LIST = '/getset',
   DATA_CHANGE_LOG_API = '/datachange',
   ACTIVITY_LOG_API = '/activitylog',
+  PLEASE_WAIT_PROCESSING_YOUR_DATA = 'Please wait, processing your data',
 }

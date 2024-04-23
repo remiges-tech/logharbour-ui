@@ -13,14 +13,44 @@
             </div>
         </div>
     </div>
-    <div class="row mt-4">
+    <div class="hidden-group" *ngIf="selectedData.apps != undefined">
+        <div class="row mt-2 className">
+            <div class="col-8">
+                <div class="d-flex flex-column flex-md-row">
+                    <div class="col-3">
+                        <label class="fs-20 fw-600 ml-3 text-color">Class</label>
+                    </div>
+                    <div class="col-5 ml-3">
+                        <ng-select [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
+                            <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 entity">
+            <div class="col-8">
+                <div class="d-flex flex-column flex-md-row">
+                    <div class="col-3">
+                        <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
+                    </div>
+                    <div class="col-3">
+                        <ng-select [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
+                            <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
                     <label class="fs-20 fw-600 ml-3 text-color">Days</label>
                 </div>
                 <div class="col-3">
-                    <input type="number" [(ngModel)]="selectedData.days" class="dropdown custom-input" id="days" placeholder="--Days--" min="1">
+                    <input type="number" [(ngModel)]="selectedData.days" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
                 </div>
             </div>
         </div>
@@ -40,7 +70,7 @@
         </div>
     </div>
     <!--------------Filters section------------------>
-    <div class="mt-4 pointer" (click)="toggleFilters()">
+    <!-- <div class="mt-4 pointer" (click)="toggleFilters()">
         <div class="line" *ngIf="!showFilters">
             &#9656;<span>Filters</span>
         </div>
@@ -72,7 +102,7 @@
                     </ng-select>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- <div class="col-4">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
@@ -83,7 +113,19 @@
                 </div>
             </div>
         </div> -->
-    </div>
+        <!-- <div class="col-4">
+            <div class="d-flex flex-column flex-md-row">
+                <div class="col-2">
+                    <label class="fs-20 fw-600 ml-3 text-color">User</label>
+                </div>
+                <div class="col-3">
+                    <ng-select [(ngModel)]="selectedData.users" class="dropdown" id="user" placeholder="--Select User--">
+                        <ng-option [value]="user" *ngFor="let user of usersList">{{user}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    </div> -->
     <!------Submit & Reset section------------>
     <div class="mt-4">
         <a type="click" class="fs-20 fw-600 pointer" (click)="resetHandler()">Reset</a>

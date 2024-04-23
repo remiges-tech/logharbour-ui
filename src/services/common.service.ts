@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CommonService {
   private production: boolean = false;
+  isLoading: boolean = false;
   constructor() { }
 
   log(value: any, type?: string) {
@@ -16,6 +17,14 @@ export class CommonService {
       else
         console.log(value);
     }
+  }
+
+  showLoader() {
+    this.isLoading = true;
+  }
+
+  hideLoader() {
+    this.isLoading = false;
   }
 
 }

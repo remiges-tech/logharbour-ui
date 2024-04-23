@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'bootstrap/scss/bootstrap';
+@import 'ngx-toastr/toastr';
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
@@ -244,7 +245,7 @@ body {
   color: var(--input-field) !important;
   font-weight: 700 !important;
   font-size: 15px !important;
-  padding: 3px 10px ;
+  padding-left: 10px ;
   height: 36px ; 
   border: 1px solid #cccccc;
 }
