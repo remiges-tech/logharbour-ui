@@ -9,10 +9,10 @@ import { CommonService } from 'src/services/common.service';
 import { CONSTANTS } from 'src/services/constants.service';
 interface SelectedDataInterface {
   apps: string | undefined,
-  class?: string | undefined,
-  users?: string | undefined,
-  entityId?: string | undefined,
-  days: number | 0
+  class?: string,
+  users?: string,
+  entityId?: string,
+  days: number 
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class ShowactivityLogComponent {
   private _toastr = inject(ToastrService);
   selectedData: SelectedDataInterface = {
     apps: undefined,
-    days: 5
+    days: 50
   }
   appsList?: string[]
   classList?: string[]
@@ -38,83 +38,6 @@ export class ShowactivityLogComponent {
   usersList?: string[]
   activityLogs?: ActivityLogs[]
   showFilters: boolean = false;
-
-  // data: ActivityChangeLogs[] = [{
-  //   when: "2024-04-15T05:40:38.6600928Z",
-  //   who: "jim",
-  //   app: "OnlineStore",
-  //   system: "server1",
-  //   module: "Orders",
-  //   op: "Update",
-  //   type: "A",
-  //   class: "Order",
-  //   instance_id: 456,
-  //   status: "Success",
-  //   error: "server-error",
-  //   remote_ip: "203.0.113.45",
-  //   msg: "Order updated successfully",
-  //   data: {
-  //     entity: "ruleset",
-  //     op: "Update",
-  //     changes: [
-  //       {
-  //         field: "brwf",
-  //         old_value: this.getTypeOfValue("W"),
-  //         new_value: this.getTypeOfValue("W")
-  //       },
-  //       {
-  //         field: "setname",
-  //         old_value: this.getTypeOfValue("ucc_user_cr"),
-  //         new_value: this.getTypeOfValue("ucc_user_cr")
-  //       },
-  //       {
-  //         field: "ruleset",
-  //         old_value: this.getTypeOfValue("[{\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"getcustdetails\"], \"properties\": {\"nextstep\": \"getcustdetails\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"start\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"aof\", \"dpandbankaccvalid\", \"kycvalid\", \"nomauth\"], \"properties\": {\"nextstep\": \"aof\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"aof\", \"kycvalid\", \"nomauth\", \"bankaccvalid\"], \"properties\": {\"nextstep\": \"aof\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"physical\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"physical\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"kycvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"kycvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"dpandbankvalidation\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"dpandbankvalidation\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"bankaccvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"bankaccvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"nomauth\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"nomauth\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"aof\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"aof\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"sendauthlinktoclient\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"sendauthlinktoclient\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}]"),
-  //         new_value: this.getTypeOfValue("[\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"start\"\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"physical\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"getcustdetails\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"getcustdetails\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"aof\",\n        \"dpandbankaccvalid\",\n        \"kycvalid\",\n        \"nomauth\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"aof\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"physical\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"aof\",\n        \"kycvalid\",\n        \"nomauth\",\n        \"bankaccvalid\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"aof\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"physical\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"kycvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"kycvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"dpandbankvalidation\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"dpandbankvalidation\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"bankaccvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"bankaccvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"nomauth\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"nomauth\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"aof\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"aof\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"sendauthlinktoclient\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"sendauthlinktoclient\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  }\n]")
-  //       }
-  //     ]
-  //   }
-  // }, {
-  //   when: "2024-04-15T05:40:38.6600928Z",
-  //   who: "jim",
-  //   app: "OnlineStore",
-  //   system: "server1",
-  //   module: "Orders",
-  //   op: "Update",
-  //   type: "A",
-  //   class: "Order",
-  //   instance_id: 456,
-  //   status: "Success",
-  //   error: "server-error",
-  //   remote_ip: "203.0.113.45",
-  //   msg: "Order updated successfully",
-  //   data: {
-  //     entity: "ruleset",
-  //     op: "Update",
-  //     changes: [
-  //       {
-  //         field: "brwf",
-  //         old_value: this.getTypeOfValue("W"),
-  //         new_value: this.getTypeOfValue("W")
-  //       },
-  //       {
-  //         field: "setname",
-  //         old_value: this.getTypeOfValue("ucc_user_cr"),
-  //         new_value: this.getTypeOfValue("ucc_user_cr")
-  //       },
-  //       {
-  //         field: "ruleset",
-  //         old_value: this.getTypeOfValue("[{\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"getcustdetails\"], \"properties\": {\"nextstep\": \"getcustdetails\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"start\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"aof\", \"dpandbankaccvalid\", \"kycvalid\", \"nomauth\"], \"properties\": {\"nextstep\": \"aof\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"aof\", \"kycvalid\", \"nomauth\", \"bankaccvalid\"], \"properties\": {\"nextstep\": \"aof\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"physical\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"getcustdetails\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"physical\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"kycvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"kycvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"dpandbankvalidation\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"dpandbankvalidation\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"bankaccvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"bankaccvalid\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"nomauth\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"nomauth\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [\"sendauthlinktoclient\"], \"properties\": {\"nextstep\": \"sendauthlinktoclient\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"aof\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"aof\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"sendauthlinktoclient\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": false, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}, {\"NFailed\": 0, \"NMatched\": 0, \"ruleactions\": {\"tasks\": [], \"properties\": {\"done\": \"true\"}}, \"rulepattern\": [{\"op\": \"eq\", \"val\": \"sendauthlinktoclient\", \"attr\": \"step\"}, {\"op\": \"eq\", \"val\": true, \"attr\": \"stepfailed\"}, {\"op\": \"eq\", \"val\": \"demat\", \"attr\": \"mode\"}]}]"),
-  //         new_value: this.getTypeOfValue("[\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"start\"\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"physical\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"getcustdetails\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"getcustdetails\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"aof\",\n        \"dpandbankaccvalid\",\n        \"kycvalid\",\n        \"nomauth\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"aof\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"physical\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"aof\",\n        \"kycvalid\",\n        \"nomauth\",\n        \"bankaccvalid\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"aof\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"getcustdetails\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"physical\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"kycvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"kycvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"dpandbankvalidation\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"dpandbankvalidation\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"bankaccvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"bankaccvalid\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"nomauth\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"nomauth\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"aof\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [\n        \"sendauthlinktoclient\"\n      ],\n      \"properties\": {\n        \"nextstep\": \"sendauthlinktoclient\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"aof\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"sendauthlinktoclient\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": false\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  },\n  {\n    \"rulepattern\": [\n      {\n        \"attr\": \"step\",\n        \"op\": \"eq\",\n        \"val\": \"sendauthlinktoclient\"\n      },\n      {\n        \"attr\": \"stepfailed\",\n        \"op\": \"eq\",\n        \"val\": true\n      },\n      {\n        \"attr\": \"mode\",\n        \"op\": \"eq\",\n        \"val\": \"demat\"\n      }\n    ],\n    \"ruleactions\": {\n      \"tasks\": [],\n      \"properties\": {\n        \"done\": \"true\"\n      }\n    },\n    \"NMatched\": 0,\n    \"NFailed\": 0\n  }\n]")
-  //       }
-  //     ]
-  //   }
-  // }]
-
-
-  toggleFilters(): void {
-    this.showFilters = !this.showFilters;
-  }
 
   ngOnInit() {
     this.getAppsList()
@@ -126,10 +49,16 @@ export class ShowactivityLogComponent {
       this._apiCommonService.getAppsList().subscribe((res: AppListResp) => {
         this._commonService.hideLoader();
         if (res.status == CONSTANTS.SUCCESS) {
+          if (res.data == null || res.data.length == 0) {
+            this._toastr.error('No data Found!', CONSTANTS.ERROR);
+            return;
+          }
           this.appsList = res.data
         } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any)=>{
+        this._commonService.hideLoader()
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -139,6 +68,26 @@ export class ShowactivityLogComponent {
         msg: error
       });
     }
+  }
+
+  appChangeHandler() {
+    if (this.selectedData.apps == undefined || this.selectedData.apps == null) {
+      this.selectedData.class = undefined;
+      this.selectedData.entityId = undefined;
+      return;
+    }
+
+    this.getDropdownsValue('class');
+    this.getDropdownsValue('who');
+  }
+
+  classChangeHandler() {
+    if (this.selectedData.class == undefined || this.selectedData.class == null) {
+      this.selectedData.entityId = undefined;
+      return;
+    }
+
+    this.getDropdownsValue('instance');
   }
 
   getDropdownsValue(field: 'class' | 'instance' | 'who') {
@@ -168,6 +117,8 @@ export class ShowactivityLogComponent {
         } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any)=>{
+        this._commonService.hideLoader()
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -182,7 +133,7 @@ export class ShowactivityLogComponent {
   resetHandler() {
     this.selectedData = {
       apps: undefined,
-      days: 5,
+      days: 50,
       class: undefined,
       users: undefined,
       entityId: undefined
@@ -194,6 +145,7 @@ export class ShowactivityLogComponent {
   getActivityLogs() {
     if (this.selectedData.apps == undefined || this.selectedData.days == undefined) {
       // toast to display appropriate msg
+      this._toastr.error('Application and Days must be selected first.', CONSTANTS.ERROR);
       return;
     }
 
@@ -221,10 +173,18 @@ export class ShowactivityLogComponent {
       this._activityLogService.getActivityLogs(req).subscribe((res: ActivityLogResp) => {
         this._commonService.hideLoader();
         if (res.status == CONSTANTS.SUCCESS) {
+          if (res.data.LogEntery == null || res.data.
+            LogEntery.length == 0) {
+            this._toastr.error('No data Found!', CONSTANTS.ERROR);
+            return;
+          }
+
           this.activityLogs = res.data.LogEntery
         } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any)=>{
+        this._commonService.hideLoader()
       })
 
     } catch (error) {

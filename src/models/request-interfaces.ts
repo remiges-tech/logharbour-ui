@@ -1,5 +1,3 @@
-import { DataChangeLogs } from "./common-interfaces";
-
 export interface GetSetReq{
     data: {
         app: string,

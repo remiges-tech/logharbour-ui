@@ -6,43 +6,43 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" (change)="getDropdownsValue('class');getDropdownsValue('instance'); getDropdownsValue('field'); getDropdownsValue('who')" class="dropdown" id="app" placeholder="--Select App--">
+                    <ng-select [(ngModel)]="selectedData.apps" (change)="appChangeHandler()" class="dropdown" id="app" placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="hidden-group" *ngIf="selectedData.apps != undefined">
-        <div class="row mt-2 className">
+    <div class="hidden-group" >
+        <div class="row mt-2 className" *ngIf="selectedData.apps != undefined">
             <div class="col-8">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-3">
                         <label class="fs-20 fw-600 ml-3 text-color">Class</label>
                     </div>
                     <div class="col-5 ml-3">
-                        <ng-select [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
+                        <ng-select (change)="classChangeHandler()" [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
                             <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-2 entity">
+        <div class="row mt-2 entity" *ngIf="selectedData.class != undefined">
             <div class="col-8">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-3">
                         <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
                     </div>
                     <div class="col-3">
-                        <ng-select [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
+                        <ng-select (change)="entityChangeHandler()" [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
                             <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-2 field">
+        <div class="row mt-2 field" *ngIf="selectedData.entityId != undefined">
             <div class="col-8">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-3">
@@ -69,7 +69,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-2" *ngIf="selectedData.apps != undefined">
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
@@ -85,8 +85,8 @@
     </div>
 
     <div class="mt-4">
-        <a type="click" class="fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</a>
-        <a type="click" class=" fs-20 fw-600 mx-4 pointer" (click)="getDataChangeLogs()">Submit</a>
+        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</button>
+        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getDataChangeLogs()">Submit</button>
     </div>
 
     <div class="card my-3" *ngFor="let log of dataChangeLogs">

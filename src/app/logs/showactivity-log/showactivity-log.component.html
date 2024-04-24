@@ -6,29 +6,29 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select class="dropdown" [(ngModel)]="selectedData.apps" id="app" (change)="getDropdownsValue('class');getDropdownsValue('instance');getDropdownsValue('who')" placeholder="--Select App--">
+                    <ng-select class="dropdown" [(ngModel)]="selectedData.apps" id="app" (change)="appChangeHandler()" placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="hidden-group" *ngIf="selectedData.apps != undefined">
-        <div class="row mt-2 className">
+    <div class="hidden-group">
+        <div class="row mt-2 className" *ngIf="selectedData.apps != undefined">
             <div class="col-8">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-3">
                         <label class="fs-20 fw-600 ml-3 text-color">Class</label>
                     </div>
                     <div class="col-5 ml-3">
-                        <ng-select [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
+                        <ng-select [(ngModel)]="selectedData.class" (change)="classChangeHandler()" class="dropdown" id="class" placeholder="--Select Class--">
                             <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-2 entity">
+        <div class="row mt-2 entity" *ngIf="selectedData.class != undefined">
             <div class="col-8">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-3">
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-2"  *ngIf="selectedData.apps != undefined">
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
@@ -69,69 +69,10 @@
             </div>
         </div>
     </div>
-    <!--------------Filters section------------------>
-    <!-- <div class="mt-4 pointer" (click)="toggleFilters()">
-        <div class="line" *ngIf="!showFilters">
-            &#9656;<span>Filters</span>
-        </div>
-        <div class="line" *ngIf="showFilters">
-            &#9662;<span>Filters</span>
-        </div>
-    </div>
-    <div class="row" *ngIf="showFilters">
-        <div class="col-4">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-2">
-                    <label class="fs-20 fw-600 ml-3 text-color">Class</label>
-                </div>
-                <div class="col-2 ml-3">
-                    <ng-select [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
-                        <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
-                </div>
-                <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
-                        <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="col-4">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Doc ID</label>
-                </div>
-                <div class="col-3">
-                    <input type="text" class="dropdown custom-input" id="doc_id" placeholder="--Doc ID--" min="1">
-                </div>
-            </div>
-        </div> -->
-        <!-- <div class="col-4">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-2">
-                    <label class="fs-20 fw-600 ml-3 text-color">User</label>
-                </div>
-                <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.users" class="dropdown" id="user" placeholder="--Select User--">
-                        <ng-option [value]="user" *ngFor="let user of usersList">{{user}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!------Submit & Reset section------------>
     <div class="mt-4">
-        <a type="click" class="fs-20 fw-600 pointer" (click)="resetHandler()">Reset</a>
-        <a type="click" class=" fs-20 fw-600 mx-4 pointer" (click)="getActivityLogs()">Submit</a>
+        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</button>
+        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getActivityLogs()">Submit</button>
     </div>
-    <!-------Detail View Section------------>
     <div class="card my-3" *ngFor="let log of activityLogs">
         <div class="card-body">
             <div class="row p-3">
