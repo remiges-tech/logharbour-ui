@@ -64,7 +64,7 @@
                     <label class="fs-20 fw-600 ml-3 text-color">Days</label>
                 </div>
                 <div class="col-3">
-                    <input [(ngModel)]="selectedData.days" type="number" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
+                    <input [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" type="number" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
                 </div>
             </div>
         </div>

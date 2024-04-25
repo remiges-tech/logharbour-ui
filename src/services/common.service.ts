@@ -27,4 +27,12 @@ export class CommonService {
     this.isLoading = false;
   }
 
+  parseStringValue(value: string) {
+    try {
+      return JSON.parse(value)
+    } catch (err) {
+      return value
+    }
+  }
+
 }

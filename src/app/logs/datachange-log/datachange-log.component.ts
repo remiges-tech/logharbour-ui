@@ -40,14 +40,6 @@ export class DatachangeLogComponent {
   dataChangeLogs?: DataChangeLogs[]
 
 
-  parseStringValue(value: string) {
-    try {
-      return JSON.parse(value)
-    } catch (err) {
-      return value
-    }
-  }
-
   ngOnInit() { 
     this.getAppsList()
   }
@@ -203,13 +195,14 @@ export class DatachangeLogComponent {
         if (res.status == CONSTANTS.SUCCESS) {
           if (res.data.logs == null || res.data.logs.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
+            this.dataChangeLogs = undefined
             return;
           }
 
           res.data.logs.forEach(log => {
             log.data.changes.forEach((change, index) => {
-              log.data.changes[index].old_value = this.parseStringValue(change.old_value);
-              log.data.changes[index].new_value = this.parseStringValue(change.new_value);
+              log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
+              log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
             });
           })
 

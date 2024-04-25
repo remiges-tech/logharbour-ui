@@ -16,6 +16,25 @@ export interface DataChangeLogReq{
     }
 }
 
+export interface HighPriLogReq{
+    data: {
+        app: string,
+        pri: string,
+        days: number,
+        search_after_timestamp?: string
+    }
+}
+
+export interface DebugLogReq{
+    data: {
+        app: string,
+        module: string,
+        pri: string,
+        days: number
+        trace_id?: string
+    }
+}
+
 export interface ActivityLogReq{
     data: {
         app: string;
