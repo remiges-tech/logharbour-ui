@@ -10,6 +10,7 @@ import { LogsRoutingModule } from './logs-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HighpriLogComponent } from './highpri-log/highpri-log.component';
 import { DebugLogComponent } from './debug-log/debug-log.component';
+import { UnusualIpComponent } from './unusual-ip/unusual-ip.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { DebugLogComponent } from './debug-log/debug-log.component';
     DatachangeLogComponent,
     ShowactivityLogComponent,
     HighpriLogComponent,
-    DebugLogComponent
+    DebugLogComponent,
+    UnusualIpComponent
   ],
   imports: [
     NgxJsonViewerModule,

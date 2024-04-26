@@ -5,17 +5,19 @@ import { ShowactivityLogComponent } from './showactivity-log/showactivity-log.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HighpriLogComponent } from './highpri-log/highpri-log.component';
 import { DebugLogComponent } from './debug-log/debug-log.component';
+import { UnusualIpComponent } from './unusual-ip/unusual-ip.component';
 
 const routes: Routes = [
-  {path: '', component:DatachangeLogComponent},
-  {path: 'showactivity-log', component:ShowactivityLogComponent},
-  {path: 'highpri-log', component:HighpriLogComponent},
-  {path: 'debug-log', component:DebugLogComponent},
-  {path: '**', component: PageNotFoundComponent}
+  { path: '', component: DatachangeLogComponent },
+  { path: 'showactivity-log', component: ShowactivityLogComponent },
+  { path: 'highpri-log', component: HighpriLogComponent },
+  { path: 'debug-log', component: DebugLogComponent },
+  { path: 'unusual-ip', component: UnusualIpComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LogsRoutingModule { }
+export class LogsRoutingModule {}

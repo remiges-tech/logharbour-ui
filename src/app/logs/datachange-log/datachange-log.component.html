@@ -1,112 +1,203 @@
 <div class="container mt-2">
-    <div class="row">
-        <div class="col-8">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Application</label>
-                </div>
-                <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" (change)="appChangeHandler()" class="dropdown" id="app" placeholder="--Select App--">
-                        <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-8">
+      <div class="d-flex flex-column flex-md-row">
+        <div class="col-3">
+          <label class="fs-20 fw-600 ml-3 text-color">Application</label>
         </div>
+        <div class="col-3">
+          <ng-select
+            [(ngModel)]="selectedData.apps"
+            (change)="appChangeHandler()"
+            class="dropdown"
+            id="app"
+            placeholder="--Select App--"
+          >
+            <ng-option [value]="app" *ngFor="let app of appsList">{{
+              app
+            }}</ng-option>
+          </ng-select>
+        </div>
+      </div>
     </div>
-    <div class="hidden-group" >
-        <div class="row mt-2 className" *ngIf="selectedData.apps != undefined">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Class</label>
-                    </div>
-                    <div class="col-5 ml-3">
-                        <ng-select (change)="classChangeHandler()" [(ngModel)]="selectedData.class" class="dropdown" id="class" placeholder="--Select Class--">
-                            <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
+  </div>
+  <div class="hidden-group">
+    <div class="row mt-2 className" *ngIf="selectedData.apps != undefined">
+      <div class="col-8">
+        <div class="d-flex flex-column flex-md-row">
+          <div class="col-3">
+            <label class="fs-20 fw-600 ml-3 text-color">Class</label>
+          </div>
+          <div class="col-5 ml-3">
+            <ng-select
+              (change)="classChangeHandler()"
+              [(ngModel)]="selectedData.class"
+              class="dropdown"
+              id="class"
+              placeholder="--Select Class--"
+            >
+              <ng-option [value]="class" *ngFor="let class of classList">{{
+                class
+              }}</ng-option>
+            </ng-select>
+          </div>
         </div>
-        <div class="row mt-2 entity" *ngIf="selectedData.class != undefined">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
-                    </div>
-                    <div class="col-3">
-                        <ng-select (change)="entityChangeHandler()" [(ngModel)]="selectedData.entityId" class="dropdown" id="entity" placeholder="--Select Entity ID--">
-                            <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2 field" *ngIf="selectedData.entityId != undefined">
-            <div class="col-8">
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-3">
-                        <label class="fs-20 fw-600 ml-3 text-color">Field</label>
-                    </div>
-                    <div class="col-3">
-                        <ng-select [(ngModel)]="selectedData.fields" class="dropdown" id="field" placeholder="--Select Field--">
-                            <ng-option [value]="field" *ngFor="let field of fieldList">{{field}}</ng-option>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="row mt-2">
-        <div class="col-8">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Days</label>
-                </div>
-                <div class="col-3">
-                    <input [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" type="number" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
-                </div>
-            </div>
+    <div class="row mt-2 entity" *ngIf="selectedData.class != undefined">
+      <div class="col-8">
+        <div class="d-flex flex-column flex-md-row">
+          <div class="col-3">
+            <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
+          </div>
+          <div class="col-3">
+            <ng-select
+              (change)="entityChangeHandler()"
+              [(ngModel)]="selectedData.entityId"
+              class="dropdown"
+              id="entity"
+              placeholder="--Select Entity ID--"
+            >
+              <ng-option
+                [value]="entityId"
+                *ngFor="let entityId of entityIdList"
+                >{{ entityId }}</ng-option
+              >
+            </ng-select>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="row mt-2" *ngIf="selectedData.apps != undefined">
-        <div class="col-8">
-            <div class="d-flex flex-column flex-md-row">
-                <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">User</label>
-                </div>
-                <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.users" class="dropdown" id="user" placeholder="--Select User--">
-                        <ng-option [value]="user" *ngFor="let user of usersList">{{user}}</ng-option>
-                    </ng-select>
-                </div>
-            </div>
+    <div class="row mt-2 field" *ngIf="selectedData.entityId != undefined">
+      <div class="col-8">
+        <div class="d-flex flex-column flex-md-row">
+          <div class="col-3">
+            <label class="fs-20 fw-600 ml-3 text-color">Field</label>
+          </div>
+          <div class="col-3">
+            <ng-select
+              [(ngModel)]="selectedData.fields"
+              class="dropdown"
+              id="field"
+              placeholder="--Select Field--"
+            >
+              <ng-option [value]="field" *ngFor="let field of fieldList">{{
+                field
+              }}</ng-option>
+            </ng-select>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-8">
+      <div class="d-flex flex-column flex-md-row">
+        <div class="col-3">
+          <label class="fs-20 fw-600 ml-3 text-color">Days</label>
+        </div>
+        <div class="col-3">
+          <input
+            [(ngModel)]="selectedData.days"
+            oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
+            type="number"
+            class="dropdown custom-input"
+            id="days"
+            placeholder="--Days--"
+            min="1"
+            style="width: 6rem"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2" *ngIf="selectedData.apps != undefined">
+    <div class="col-8">
+      <div class="d-flex flex-column flex-md-row">
+        <div class="col-3">
+          <label class="fs-20 fw-600 ml-3 text-color">User</label>
+        </div>
+        <div class="col-3">
+          <ng-select
+            [(ngModel)]="selectedData.users"
+            class="dropdown"
+            id="user"
+            placeholder="--Select User--"
+          >
+            <ng-option [value]="user" *ngFor="let user of usersList">{{
+              user
+            }}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <div class="mt-4">
-        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</button>
-        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getDataChangeLogs()">Submit</button>
-    </div>
+  <div class="mt-4">
+    <button
+      type="button"
+      class="btn-link fs-20 fw-600 pointer"
+      (click)="resetHandler()"
+    >
+      Reset
+    </button>
+    <button
+      type="button"
+      class="btn-link fs-20 fw-600 mx-4 pointer"
+      (click)="getDataChangeLogs()"
+    >
+      Submit
+    </button>
+  </div>
 
-    <div class="card my-3" *ngFor="let log of dataChangeLogs">
-        <div class="card-body">
-            <div class="row p-3">
-                <div class="col-6"><h5><strong>User: </strong> {{log.who}}</h5></div>
-                <div class="col-6"><h5><strong>Remote IP: </strong> {{log.remote_ip}}</h5></div>
-                <div class="col-6"><h5><strong>Operation: </strong> {{log.data.op}}</h5></div>
-                <div class="col-6"><h5><strong>Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
-                <div class="col-12"><h5><strong>Description: </strong> {{log.msg}}</h5></div>
-            </div>
-            <div class="card no-border m-2" *ngFor="let dataChangeLog of log.data.changes">
-                <div class="card-title mt-2">
-                    <h4 class="p-2"><strong>Field Name: </strong> {{dataChangeLog.field}}</h4>
-                </div>
-                <div class="card-body pt-0">
-                    <div><strong>Old Value :</strong> <ngx-json-viewer [json]="dataChangeLog.old_value" [expanded]="false"></ngx-json-viewer></div>
-                    <div><strong>New Value :</strong> <ngx-json-viewer [json]="dataChangeLog.new_value" [expanded]="false"></ngx-json-viewer></div>
-                </div>
-            </div>
+  <div class="card my-3" *ngFor="let log of dataChangeLogs">
+    <div class="card-body">
+      <div class="row p-3">
+        <div class="col-6">
+          <h5><strong>User: </strong> {{ log.who }}</h5>
         </div>
+        <div class="col-6">
+          <h5><strong>Remote IP: </strong> {{ log.remote_ip }}</h5>
+        </div>
+        <div class="col-6">
+          <h5><strong>Operation: </strong> {{ log.data.op }}</h5>
+        </div>
+        <div class="col-6">
+          <h5>
+            <strong>Timestamp: </strong>
+            {{ log.when | date : "MMM d, y, h:mm:ss a" }}
+          </h5>
+        </div>
+        <div class="col-12">
+          <h5><strong>Description: </strong> {{ log.msg }}</h5>
+        </div>
+      </div>
+      <div
+        class="card no-border m-2"
+        *ngFor="let dataChangeLog of log.data.changes"
+      >
+        <div class="card-title mt-2">
+          <h4 class="p-2">
+            <strong>Field Name: </strong> {{ dataChangeLog.field }}
+          </h4>
+        </div>
+        <div class="card-body pt-0">
+          <div>
+            <strong>Old Value :</strong>
+            <ngx-json-viewer
+              [json]="dataChangeLog.old_value"
+              [expanded]="false"
+            ></ngx-json-viewer>
+          </div>
+          <div>
+            <strong>New Value :</strong>
+            <ngx-json-viewer
+              [json]="dataChangeLog.new_value"
+              [expanded]="false"
+            ></ngx-json-viewer>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
