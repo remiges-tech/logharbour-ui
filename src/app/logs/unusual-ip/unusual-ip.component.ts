@@ -10,6 +10,7 @@ import { UnusualIpService } from 'src/services/unusual-ip.service';
 interface SelectedDataInterface {
   apps: string | undefined;
   days: number;
+  ipPercentage: number
 }
 @Component({
   selector: 'app-unusual-ip',
@@ -25,6 +26,7 @@ export class UnusualIpComponent {
   selectedData: SelectedDataInterface = {
     apps: undefined,
     days: 50,
+    ipPercentage: 1
   };
   appsList?: string[];
   unusualIPs?: string[];
@@ -67,6 +69,7 @@ export class UnusualIpComponent {
     this.selectedData = {
       apps: undefined,
       days: 50,
+      ipPercentage: 1
     };
 
     this.unusualIPs = [];
@@ -78,7 +81,7 @@ export class UnusualIpComponent {
       this.selectedData.days == undefined
     ) {
       this._toastr.error(
-        'Application and Days are mandatory fields.',
+        'Application, Days and unusual percentage are mandatory fields.',
         CONSTANTS.ERROR
       );
       this.unusualIPs = undefined;
@@ -90,7 +93,7 @@ export class UnusualIpComponent {
         data: {
           app: this.selectedData.apps,
           days: this.selectedData.days,
-          unusualPercent: 18,
+          unusualPercent: this.selectedData.ipPercentage,
         },
       };
 

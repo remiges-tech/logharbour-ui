@@ -42,6 +42,28 @@
     </div>
   </div>
 
+  <div class="row mt-2">
+    <div class="col-8">
+      <div class="d-flex flex-column flex-md-row">
+        <div class="col-3">
+          <label class="fs-20 fw-600 ml-3 text-color">Unusual &#37;</label>
+        </div>
+        <div class="col-3">
+          <div class="d-flex align-items-center">
+            <input
+            min="1"
+            max="100"
+            type="range"
+            [(ngModel)]="selectedData.ipPercentage"
+            name="ipPercentage"
+          />
+          &nbsp;<span>{{selectedData.ipPercentage}}&#37; </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="mt-4">
     <button
       type="button"

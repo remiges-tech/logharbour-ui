@@ -40,8 +40,8 @@
         </div>
     </div>
     <div class="mt-4">
-        <a type="click" class="fs-20 fw-600 pointer" (click)="resetHandler()">Reset</a>
-        <a type="click" class=" fs-20 fw-600 mx-4 pointer" (click)="getHighPriLogs()">Submit</a>
+        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</button>
+        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getHighPriLogs()">Submit</button>
     </div>
 
     <div class="card my-3" *ngFor="let log of highPriLogs">
