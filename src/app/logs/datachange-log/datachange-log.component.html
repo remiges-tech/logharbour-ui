@@ -3,7 +3,7 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color">Application</label>
+          <label i18n="@@App" class="fs-20 fw-600 ml-3 text-color">Application</label>
         </div>
         <div class="col-3">
           <ng-select
@@ -12,6 +12,7 @@
             class="dropdown"
             id="app"
             placeholder="--Select App--"
+            i18n-placeholder="@@placedholderApp"
           >
             <ng-option [value]="app" *ngFor="let app of appsList">{{
               app
@@ -26,7 +27,7 @@
       <div class="col-8">
         <div class="d-flex flex-column flex-md-row">
           <div class="col-3">
-            <label class="fs-20 fw-600 ml-3 text-color">Class</label>
+            <label i18n="@@class" class="fs-20 fw-600 ml-3 text-color">Class</label>
           </div>
           <div class="col-5 ml-3">
             <ng-select
@@ -35,6 +36,7 @@
               class="dropdown"
               id="class"
               placeholder="--Select Class--"
+              i18n-placeholder="@@placeholderClass"
             >
               <ng-option [value]="class" *ngFor="let class of classList">{{
                 class
@@ -48,7 +50,7 @@
       <div class="col-8">
         <div class="d-flex flex-column flex-md-row">
           <div class="col-3">
-            <label class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
+            <label i18n="@@entityID" class="fs-20 fw-600 ml-3 text-color">Entity ID</label>
           </div>
           <div class="col-3">
             <ng-select
@@ -57,6 +59,7 @@
               class="dropdown"
               id="entity"
               placeholder="--Select Entity ID--"
+              i18n-placedholder="@@placeholderEntityID"
             >
               <ng-option
                 [value]="entityId"
@@ -72,7 +75,7 @@
       <div class="col-8">
         <div class="d-flex flex-column flex-md-row">
           <div class="col-3">
-            <label class="fs-20 fw-600 ml-3 text-color">Field</label>
+            <label i18n="@@field" class="fs-20 fw-600 ml-3 text-color">Field</label>
           </div>
           <div class="col-3">
             <ng-select
@@ -80,6 +83,7 @@
               class="dropdown"
               id="field"
               placeholder="--Select Field--"
+              i18n-placeholder="@@placeholderField"
             >
               <ng-option [value]="field" *ngFor="let field of fieldList">{{
                 field
@@ -94,7 +98,7 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color">Days</label>
+          <label i18n="@@days" class="fs-20 fw-600 ml-3 text-color">Days</label>
         </div>
         <div class="col-3">
           <input
@@ -104,6 +108,7 @@
             class="dropdown custom-input"
             id="days"
             placeholder="--Days--"
+            i18n-placeholder="@@placedholderDays"
             min="1"
             style="width: 6rem"
           />
@@ -115,7 +120,7 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color">User</label>
+          <label i18n="@@user" class="fs-20 fw-600 ml-3 text-color">User</label>
         </div>
         <div class="col-3">
           <ng-select
@@ -123,6 +128,7 @@
             class="dropdown"
             id="user"
             placeholder="--Select User--"
+            i18n-placeholder="@@placeholderUser"
           >
             <ng-option [value]="user" *ngFor="let user of usersList">{{
               user
@@ -134,8 +140,9 @@
   </div>
 
   <div class="mt-4">
-    <button
+    <button 
       type="button"
+      i18n="@@Reset"
       class="btn-link fs-20 fw-600 pointer"
       (click)="resetHandler()"
     >
@@ -143,6 +150,7 @@
     </button>
     <button
       type="button"
+      i18n="@@Submit"
       class="btn-link fs-20 fw-600 mx-4 pointer"
       (click)="getDataChangeLogs()"
     >
@@ -154,22 +162,22 @@
     <div class="card-body">
       <div class="row p-3">
         <div class="col-6">
-          <h5><strong>User: </strong> {{ log.who }}</h5>
+          <h5><strong i18n="@@User">User: </strong> {{ log.who }}</h5>
         </div>
         <div class="col-6">
-          <h5><strong>Remote IP: </strong> {{ log.remote_ip }}</h5>
+          <h5><strong i18n="@@RemoteIP">Remote IP: </strong> {{ log.remote_ip }}</h5>
         </div>
         <div class="col-6">
-          <h5><strong>Operation: </strong> {{ log.data.op }}</h5>
+          <h5><strong i18n="@@Operation">Operation: </strong> {{ log.data.op }}</h5>
         </div>
         <div class="col-6">
           <h5>
-            <strong>Timestamp: </strong>
+            <strong i18n="@@Timestamp">Timestamp: </strong>
             {{ log.when | date : "MMM d, y, h:mm:ss a" }}
           </h5>
         </div>
         <div class="col-12">
-          <h5><strong>Description: </strong> {{ log.msg }}</h5>
+          <h5><strong i18n="@@Description">Description: </strong> {{ log.msg }}</h5>
         </div>
       </div>
       <div
@@ -178,19 +186,19 @@
       >
         <div class="card-title mt-2">
           <h4 class="p-2">
-            <strong>Field Name: </strong> {{ dataChangeLog.field }}
+            <strong i18n="@@fieldName">Field Name: </strong> {{ dataChangeLog.field }}
           </h4>
         </div>
         <div class="card-body pt-0">
           <div>
-            <strong>Old Value :</strong>
+            <strong i18n="@@oldValue">Old Value :</strong>
             <ngx-json-viewer
               [json]="dataChangeLog.old_value"
               [expanded]="false"
             ></ngx-json-viewer>
           </div>
           <div>
-            <strong>New Value :</strong>
+            <strong i18n="@@newValue">New Value :</strong>
             <ngx-json-viewer
               [json]="dataChangeLog.new_value"
               [expanded]="false"

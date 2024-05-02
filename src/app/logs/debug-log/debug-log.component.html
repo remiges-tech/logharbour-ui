@@ -3,10 +3,10 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Application</label>
+                    <label i18n="@@App" class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" class="dropdown" (change)="appChangeHandler()"  placeholder="--Select App--">
+                    <ng-select [(ngModel)]="selectedData.apps" i18n-placeholder="@@placedholderApp" class="dropdown" (change)="appChangeHandler()"  placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
@@ -17,10 +17,10 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Module</label>
+                    <label i18n="@@Module" class="fs-20 fw-600 ml-3 text-color">Module</label>
                 </div>
                 <div class="col-5 ml-3">
-                    <ng-select [(ngModel)]="selectedData.module" (change)="moduleChangeHandler()" class="dropdown" id="module" placeholder="--Select Module--">
+                    <ng-select [(ngModel)]="selectedData.module" i18n-placeholder="@@placeholderModule" (change)="moduleChangeHandler()" class="dropdown" id="module" placeholder="--Select Module--">
                         <ng-option [value]="module" *ngFor="let module of moduleList">{{module}}</ng-option>
                     </ng-select>
                 </div>
@@ -31,10 +31,10 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Priority</label>
+                    <label i18n="@@Priortity" class="fs-20 fw-600 ml-3 text-color">Priority</label>
                 </div>
                 <div class="col-5 ml-3">
-                    <ng-select [(ngModel)]="selectedData.pri" class="dropdown" id="priority" placeholder="--Select Priority">
+                    <ng-select [(ngModel)]="selectedData.pri" i18n-placeholder="@@placeholderPriority" class="dropdown" id="priority" placeholder="--Select Priority">
                         <ng-option [value]="pri" *ngFor="let pri of priList">{{pri}}</ng-option>
                     </ng-select>
                 </div>
@@ -45,10 +45,11 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Days</label>
+                    <label i18n="@@days" class="fs-20 fw-600 ml-3 text-color">Days</label>
                 </div>
                 <div class="col-3">
-                    <input type="number" [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
+                    <input type="number" [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" class="dropdown custom-input" 
+                    i18n-placeholder="@@placedholderDays" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
                 </div>
             </div>
         </div>
@@ -69,34 +70,34 @@
     </div> -->
 
     <div class="mt-4">
-        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</button>
-        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getDebugLogs()">Submit</button>
+        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">Reset</button>
+        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getDebugLogs()" i18n="@@Submit">Submit</button>
     </div>
 
     <div class="card my-3" *ngFor="let log of debugLogs">
         <div class="card-body">
             <div class="row p-3">
-                <div class="col-6"><h5><strong>User: </strong> {{log.who}}</h5></div>
-                <div class="col-6"><h5><strong>Remote IP: </strong> {{log.remote_ip}}</h5></div>
-                <div class="col-6"><h5><strong>Operation: </strong> {{log.data.op}}</h5></div>
-                <div class="col-6"><h5><strong>Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
-                <div class="col-12"><h5><strong>Description: </strong> {{log.msg}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@User">User: </strong> {{log.who}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@RemoteIP">Remote IP: </strong> {{log.remote_ip}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@Operation">Operation: </strong> {{log.data.op}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@Timestamp">Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
+                <div class="col-12"><h5><strong  i18n="@@Description">Description: </strong> {{log.msg}}</h5></div>
             </div>
             <ng-container *ngIf="log.data.changes">
                 <div class="card no-border m-2" *ngFor="let debugLogs of log.data.changes">
                     <div class="card-title mt-2">
-                        <h4 class="p-2"><strong>Field Name: </strong> {{debugLogs.field}}</h4>
+                        <h4 class="p-2"><strong i18n="@@fieldName">Field Name: </strong> {{debugLogs.field}}</h4>
                     </div>
                     <div class="card-body pt-0">
-                        <div><strong>Old Value :</strong> <ngx-json-viewer [json]="debugLogs.old_value" [expanded]="false"></ngx-json-viewer></div>
-                        <div><strong>New Value :</strong> <ngx-json-viewer [json]="debugLogs.new_value" [expanded]="false"></ngx-json-viewer></div>
+                        <div><strong i18n="@@oldValue">Old Value :</strong> <ngx-json-viewer [json]="debugLogs.old_value" [expanded]="false"></ngx-json-viewer></div>
+                        <div><strong i18n="@@newValue">New Value :</strong> <ngx-json-viewer [json]="debugLogs.new_value" [expanded]="false"></ngx-json-viewer></div>
                     </div>
                 </div>
             </ng-container>
             <ng-container *ngIf="log.data.activitylog">
                 <div class="card no-border m-2">
                     <div class="card-body">
-                        <div><strong>Activity Log :</strong> <ngx-json-viewer [json]="log.data.activitylog" [expanded]="false"></ngx-json-viewer></div>
+                        <div><strong i18n="@@activityLog">Activity Log :</strong> <ngx-json-viewer [json]="log.data.activitylog" [expanded]="false"></ngx-json-viewer></div>
                     </div>
                 </div>
             </ng-container>

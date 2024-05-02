@@ -3,7 +3,7 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color">Application</label>
+          <label i18n="@@App" class="fs-20 fw-600 ml-3 text-color">Application</label>
         </div>
         <div class="col-3">
           <ng-select
@@ -11,6 +11,7 @@
             class="dropdown"
             id="app"
             placeholder="--Select App--"
+            i18n-placeholder="@@placedholderApp"
           >
             <ng-option [value]="app" *ngFor="let app of appsList">{{
               app
@@ -24,7 +25,7 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color">Days</label>
+          <label i18n="@@days" class="fs-20 fw-600 ml-3 text-color">Days</label>
         </div>
         <div class="col-3">
           <input
@@ -34,6 +35,7 @@
             class="dropdown custom-input"
             id="days"
             placeholder="--Days--"
+            i18n-placeholder="@@placedholderDays"
             min="1"
             style="width: 6rem"
           />
@@ -46,7 +48,7 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color">Unusual &#37;</label>
+          <label i18n="@@Unusual" class="fs-20 fw-600 ml-3 text-color">Unusual &#37;</label>
         </div>
         <div class="col-3">
           <div class="d-flex align-items-center">
@@ -69,6 +71,7 @@
       type="button"
       class="btn-link fs-20 fw-600 pointer"
       (click)="resetHandler()"
+      i18n="@@Reset"
     >
       Reset
     </button>
@@ -76,6 +79,7 @@
       type="button"
       class="btn-link fs-20 fw-600 mx-4 pointer"
       (click)="getUnusualIPs()"
+      i18n="@@Submit"
     >
       Submit
     </button>

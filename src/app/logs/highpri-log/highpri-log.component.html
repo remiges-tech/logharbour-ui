@@ -3,10 +3,10 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Application</label>
+                    <label i18n="@@App" class="fs-20 fw-600 ml-3 text-color">Application</label>
                 </div>
                 <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" (change)="getDropdownsValue('pri');" class="dropdown"  placeholder="--Select App--">
+                    <ng-select [(ngModel)]="selectedData.apps" i18n-placeholder="@@placedholderApp" (change)="getDropdownsValue('pri');" class="dropdown"  placeholder="--Select App--">
                         <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
                     </ng-select>
                 </div>
@@ -17,10 +17,10 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Priority</label>
+                    <label i18n="@@Priortity" class="fs-20 fw-600 ml-3 text-color">Priority</label>
                 </div>
                 <div class="col-5 ml-3">
-                    <ng-select [(ngModel)]="selectedData.pri" class="dropdown" id="priority" placeholder="--Select Priority">
+                    <ng-select [(ngModel)]="selectedData.pri" i18n-placeholder="@@placeholderPriority" class="dropdown" id="priority" placeholder="--Select Priority">
                         <ng-option [value]="priority" *ngFor="let priority of priList">{{priority}}</ng-option>
                     </ng-select>
                 </div>
@@ -31,43 +31,43 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color">Days</label>
+                    <label i18n="@@days" class="fs-20 fw-600 ml-3 text-color">Days</label>
                 </div>
                 <div class="col-3">
-                    <input type="number" [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
+                    <input type="number" i18n-placeholder="@@placedholderDays" [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
                 </div>
             </div>
         </div>
     </div>
     <div class="mt-4">
-        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" >Reset</button>
-        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getHighPriLogs()">Submit</button>
+        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">Reset</button>
+        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getHighPriLogs()" i18n="@@Submit">Submit</button>
     </div>
 
     <div class="card my-3" *ngFor="let log of highPriLogs">
         <div class="card-body">
             <div class="row p-3">
-                <div class="col-6"><h5><strong>User: </strong> {{log.who}}</h5></div>
-                <div class="col-6"><h5><strong>Remote IP: </strong> {{log.remote_ip}}</h5></div>
-                <div class="col-6"><h5><strong>Operation: </strong> {{log.data.op}}</h5></div>
-                <div class="col-6"><h5><strong>Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
-                <div class="col-12"><h5><strong>Description: </strong> {{log.msg}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@User">User: </strong> {{log.who}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@RemoteIP">Remote IP: </strong> {{log.remote_ip}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@Operation">Operation: </strong> {{log.data.op}}</h5></div>
+                <div class="col-6"><h5><strong i18n="@@Timestamp">Timestamp: </strong> {{log.when | date:'MMM d, y, h:mm:ss a'}}</h5></div>
+                <div class="col-12"><h5><strong i18n="@@Description">Description: </strong> {{log.msg}}</h5></div>
             </div>
             <ng-container *ngIf="log.data.changes">
                 <div class="card no-border m-2" *ngFor="let highPriLogs of log.data.changes">
                     <div class="card-title mt-2">
-                        <h4 class="p-2"><strong>Field Name: </strong> {{highPriLogs.field}}</h4>
+                        <h4 class="p-2"><strong i18n="@@fieldName">Field Name: </strong> {{highPriLogs.field}}</h4>
                     </div>
                     <div class="card-body pt-0">
-                        <div><strong>Old Value :</strong> <ngx-json-viewer [json]="highPriLogs.old_value" [expanded]="false"></ngx-json-viewer></div>
-                        <div><strong>New Value :</strong> <ngx-json-viewer [json]="highPriLogs.new_value" [expanded]="false"></ngx-json-viewer></div>
+                        <div><strong i18n="@@oldValue">Old Value :</strong> <ngx-json-viewer [json]="highPriLogs.old_value" [expanded]="false"></ngx-json-viewer></div>
+                        <div><strong i18n="@@newValue">New Value :</strong> <ngx-json-viewer [json]="highPriLogs.new_value" [expanded]="false"></ngx-json-viewer></div>
                     </div>
                 </div>
             </ng-container>
             <ng-container *ngIf="log.data.activitylog">
                 <div class="card no-border m-2">
                     <div class="card-body">
-                        <div><strong>Activity Log :</strong> <ngx-json-viewer [json]="log.data.activitylog" [expanded]="false"></ngx-json-viewer></div>
+                        <div><strong i18n="@@activityLog">Activity Log :</strong> <ngx-json-viewer [json]="log.data.activitylog" [expanded]="false"></ngx-json-viewer></div>
                     </div>
                 </div>
             </ng-container>

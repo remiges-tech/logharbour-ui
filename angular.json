@@ -10,6 +10,17 @@
           "style": "scss"
         }
       },
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "hi": {
+            "translation": "src/i18n/messages.hi.json"
+          },
+          "mr": {
+            "translation": "src/i18n/messages.mr.json"
+          }
+        }  
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,6 +28,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": false,
+            "i18nMissingTranslation": "error",
             "outputPath": "dist/logharbour",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -39,7 +52,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "1mb"
                 },
                 {
@@ -82,7 +95,9 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "logharbour:build"
+            "browserTarget": "logharbour:build",
+            "format": "json",
+            "outputPath": "src/i18n"
           }
         },
         "test": {
@@ -99,7 +114,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/font-awesome/css/font-awesome.min.css",
               "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"

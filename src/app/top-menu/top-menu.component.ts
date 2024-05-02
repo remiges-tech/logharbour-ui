@@ -1,4 +1,9 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
+interface Locale {
+  localeCode: string;
+  label: string;
+}
+
 
 @Component({
   selector: 'app-top-menu',
@@ -7,12 +12,27 @@ import { Component, Inject, LOCALE_ID } from '@angular/core';
 })
 export class TopMenuComponent {
   isDarkTheme:any;
+  selectedLocale: string = this.locale;
 
 
-  constructor() {}
+  locales: Locale[] = [
+    { localeCode: "en-US", label: "English" },
+    { localeCode: "hi", label: "Hindi" },
+    { localeCode: "mr", label: "Marathi" },
+  ];
+
+  constructor(@Inject(LOCALE_ID) public locale: string) {}
 
   ngOnInit(){
     this.currentTheme();
+  }
+
+
+
+  navigateToLocale(localeCode: string): void {
+    this.selectedLocale = this.locale;
+    const url = `/${localeCode}`; 
+    window.location.href = url;  // Change the window location directly
   }
   
 
