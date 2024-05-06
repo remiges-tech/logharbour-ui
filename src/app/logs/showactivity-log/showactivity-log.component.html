@@ -3,7 +3,7 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label i18n="@@App" class="fs-20 fw-600 ml-3 text-color">Application</label>
+                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@App">Application</span> <span class="red-astrik">&#42;</span></label>
                 </div>
                 <div class="col-3">
                     <ng-select class="dropdown" i18n-placeholder="@@placedholderApp" [(ngModel)]="selectedData.apps" id="app" (change)="appChangeHandler()" placeholder="--Select App--">
@@ -47,7 +47,7 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label i18n="@@days" class="fs-20 fw-600 ml-3 text-color">Days</label>
+                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@days">Days</span> <span class="red-astrik">&#42;</span></label>
                 </div>
                 <div class="col-3">
                     <input type="number" i18n-placeholder="@@placedholderDays" [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" class="dropdown custom-input" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
@@ -73,7 +73,8 @@
         <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">Reset</button>
         <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getActivityLogs()" i18n="@@Submit">Submit</button>
     </div>
-    <div class="card my-3" *ngFor="let log of activityLogs">
+    <app-pagination #pagination [data]="activityLogs" [collectionSize]="dataCount" (timeStamp)="getActivityLogs(true,$event)">
+    <div class="card my-3" *ngFor="let log of activityLogs | paginate: { itemsPerPage: pagination.itemPerPage, currentPage: pagination.currentPage}">
         <div class="card-body">
             <div class="row p-3">
                 <div class="col-6">
@@ -94,10 +95,12 @@
             </div>
             <div class="card no-border m-2">
                 <div class="card-body pt-0">
-                    <div><strong i18n="@@activityLog">Activity Log :</strong> <ngx-json-viewer [json]="log.data.activitylog"
+                    <div><strong i18n="@@activityLog">Activity Log :</strong> <ngx-json-viewer [json]="log.data.activityLog"
                             [expanded]="false"></ngx-json-viewer></div>
                 </div>
             </div>
         </div>
     </div>
+    </app-pagination>
+
 </div>

@@ -53,6 +53,7 @@ export class UnusualIpComponent {
         },
         (err: any) => {
           this._commonService.hideLoader();
+          this._toastr.error(err,CONSTANTS.ERROR)
         }
       );
     } catch (error) {
@@ -98,11 +99,11 @@ export class UnusualIpComponent {
       };
 
       this._commonService.showLoader();
+      this.unusualIPs = [];
       this._unusualIPService.getUnusualIP(req).subscribe(
         (res: UnusualIPResp) => {
           this._commonService.hideLoader();
           if (res.status == CONSTANTS.SUCCESS) {
-            // IF no unusual IP is there then data should come as a empty array.
             if (res.data == null || res.data.length == 0) {
               this._toastr.error('No data Found!', CONSTANTS.ERROR);
               this.unusualIPs = undefined;
@@ -116,13 +117,14 @@ export class UnusualIpComponent {
         },
         (err: any) => {
           this._commonService.hideLoader();
+          this._toastr.error(err,CONSTANTS.ERROR)
         }
       );
     } catch (error) {
       this._commonService.hideLoader();
       this._commonService.log({
         fileName: this.fileName,
-        functionName: 'getHighPriLogs',
+        functionName: 'getUnusualIPs',
         msg: error,
       });
     }

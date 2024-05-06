@@ -36,8 +36,8 @@ export class ShowactivityLogComponent {
   classList?: string[]
   entityIdList?: string[]
   usersList?: string[]
-  activityLogs?: ActivityLogs[]
-  showFilters: boolean = false;
+  activityLogs: ActivityLogs[] = []
+  dataCount: number = 0;
 
   ngOnInit() {
     this.getAppsList()
@@ -58,7 +58,8 @@ export class ShowactivityLogComponent {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       },(err:any)=>{
-        this._commonService.hideLoader()
+        this._commonService.hideLoader();
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -119,6 +120,7 @@ export class ShowactivityLogComponent {
         }
       },(err:any)=>{
         this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -140,12 +142,14 @@ export class ShowactivityLogComponent {
     }
 
     this.activityLogs = []
+    this.dataCount = 0
   }
 
-  getActivityLogs() {
+  getActivityLogs(isNext:boolean=false,timeStamp?:string) {
     if (this.selectedData.apps == undefined || this.selectedData.days == undefined) {
-      // toast to display appropriate msg
       this._toastr.error('Application and Days must be selected first.', CONSTANTS.ERROR);
+      this.activityLogs = [];
+      this.dataCount = 0;
       return;
     }
 
@@ -169,6 +173,10 @@ export class ShowactivityLogComponent {
         req.data.class = this.selectedData.class
       }
 
+      if(timeStamp != undefined || timeStamp != null){
+        req.data.search_after_timestamp = timeStamp;
+      }
+
       this._commonService.showLoader();
       this._activityLogService.getActivityLogs(req).subscribe((res: ActivityLogResp) => {
         this._commonService.hideLoader();
@@ -176,15 +184,29 @@ export class ShowactivityLogComponent {
           if (res.data.LogEntery == null || res.data.
             LogEntery.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
+            if(!isNext){
+              this.activityLogs = []
+              this.dataCount = 0;
+            }
             return;
           }
 
-          this.activityLogs = res.data.LogEntery
+          if(!isNext){
+            this.activityLogs = [];
+          }
+
+          res.data.LogEntery.forEach((entry:any) => {
+            this.activityLogs.push(entry);
+          })
+
+          this.dataCount = this.activityLogs.length;
+
         } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       },(err:any)=>{
         this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
 
     } catch (error) {

@@ -13,6 +13,8 @@ export interface DataChangeLogReq {
     instance_id?: string;
     field?: string;
     days: number;
+    search_after_timestamp?: string
+    search_after_doc_id?: string
   };
 }
 
@@ -22,6 +24,7 @@ export interface HighPriLogReq {
     pri: string;
     days: number;
     search_after_timestamp?: string;
+    search_after_doc_id?: string
   };
 }
 
@@ -32,6 +35,8 @@ export interface DebugLogReq {
     pri: string;
     days: number;
     trace_id?: string;
+    search_after_timestamp?: string;
+    search_after_doc_id?: string
   };
 }
 

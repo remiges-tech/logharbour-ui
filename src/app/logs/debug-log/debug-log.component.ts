@@ -31,7 +31,8 @@ export class DebugLogComponent {
   moduleList?: string[]
   priList?: string[]
   trace_idList?: string[]
-  debugLogs?:DebugLogs[]
+  debugLogs:DebugLogs[] = []
+  dataCount:number = 0;
 
   selectedData:SelectedDataInterface = {
     apps: undefined,
@@ -55,6 +56,9 @@ export class DebugLogComponent {
         }else{
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any) => {
+        this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -127,6 +131,7 @@ export class DebugLogComponent {
         }
       },(err:any)=>{
         this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -138,10 +143,11 @@ export class DebugLogComponent {
     }
   }
 
-  getDebugLogs(){
+  getDebugLogs(isNext:boolean = false,timestamp?:string){
     if(this.selectedData.apps == undefined || this.selectedData.module == undefined || this.selectedData.days == undefined || this.selectedData.pri == undefined){
-      this._toastr.error('Application, Priority and Days are mandatory fields.', CONSTANTS.ERROR);
-      this.debugLogs = undefined;
+      this._toastr.error('Application, Module, Priority and Days are mandatory fields.', CONSTANTS.ERROR);
+      this.debugLogs = [];
+      this.dataCount = 0;
       return;
     }
 
@@ -156,14 +162,24 @@ export class DebugLogComponent {
         }
       }
 
+      if(timestamp != undefined && timestamp != null){
+        req.data.search_after_timestamp = timestamp;
+      }
+
       this._commonService.showLoader();
       this._debugLogService.getDebugLog(req).subscribe((res:DebugLogResp) => {
         this._commonService.hideLoader();
         if(res.status == CONSTANTS.SUCCESS){
           if (res.data == null || res.data.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
-            this.debugLogs = undefined
+            if(!isNext){
+              this.debugLogs = []
+              this.dataCount = 0
+            }
             return;
+          }
+          if(!isNext){
+            this.debugLogs = [];
           }
           // Parse old_value and new_value
           res.data.forEach(log => {
@@ -171,12 +187,16 @@ export class DebugLogComponent {
               log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
               log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
             }); 
+            this.debugLogs.push(log);
           })
-          // Assign updated logsvalue to the variable
-          this.debugLogs = res.data
+
+          this.dataCount = this.debugLogs.length;
         }else{
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any) => {
+        this._commonService.hideLoader();
+        this._toastr.error(err,CONSTANTS.ERROR)
       }) 
     } catch (error) {
       this._commonService.hideLoader();
@@ -197,6 +217,7 @@ export class DebugLogComponent {
       
     }
     this.debugLogs = []
+    this.dataCount = 0;
   }
 
 }

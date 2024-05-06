@@ -9,8 +9,8 @@ import { LogsModule } from './logs/logs.module';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
-import { PageNotFoundComponent } from './logs/page-not-found/page-not-found.component';
-import { LoaderComponent } from './loader/loader.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LoaderComponent } from './components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
 
 
@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     TopMenuComponent,
     PageNotFoundComponent,
-    LoaderComponent,
+    LoaderComponent
   ],
   imports: [
     NgSelectModule,

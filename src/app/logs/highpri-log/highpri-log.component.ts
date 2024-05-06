@@ -32,7 +32,8 @@ export class HighpriLogComponent {
   }
   appsList?: string[]
   priList?: string[]
-  highPriLogs?: HighPriLogs[]
+  highPriLogs: HighPriLogs[] = []
+  dataCount:number = 0;
 
 
   ngOnInit(){
@@ -50,6 +51,9 @@ export class HighpriLogComponent {
         }else{
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any) => {
+        this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -83,6 +87,9 @@ export class HighpriLogComponent {
         }else{
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any) => {
+        this._commonService.hideLoader();
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -94,10 +101,11 @@ export class HighpriLogComponent {
     }
   }
 
-  getHighPriLogs(){
+  getHighPriLogs(isNext:boolean = false,timeStamp?:string){
     if(this.selectedData.apps == undefined || this.selectedData.days == undefined || this.selectedData.pri == undefined){
       this._toastr.error('Application, Priority and Days are mandatory fields.', CONSTANTS.ERROR);
-      this.highPriLogs = undefined;
+      this.highPriLogs = [];
+      this.dataCount = 0;
       return;
     }
 
@@ -111,14 +119,25 @@ export class HighpriLogComponent {
         }
       }
 
+      if(timeStamp != undefined && timeStamp != null){
+        req.data.search_after_timestamp = timeStamp
+      }
+
       this._commonService.showLoader();
       this._highPriLogService.getHighPriLog(req).subscribe((res:HighPriLogResp) => {
         this._commonService.hideLoader();
         if(res.status == CONSTANTS.SUCCESS){
           if (res.data.logs == null || res.data.logs.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
-            this.highPriLogs = undefined
+            if(!isNext){
+              this.highPriLogs = []
+              this.dataCount = 0
+            }
             return;
+          }
+
+          if(!isNext){
+            this.highPriLogs = []
           }
           // Parse old_value and new_value
           res.data.logs.forEach(log => {
@@ -126,12 +145,17 @@ export class HighpriLogComponent {
               log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
               log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
             }); 
+            this.highPriLogs.push(log)
           })
+
+          this.dataCount = this.highPriLogs.length
           // Assign updated logsvalue to the variable
-          this.highPriLogs = res.data.logs
         }else{
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
+      },(err:any) => {
+        this._commonService.hideLoader();
+        this._toastr.error(err,CONSTANTS.ERROR)
       }) 
     } catch (error) {
       this._commonService.hideLoader();
@@ -151,5 +175,6 @@ export class HighpriLogComponent {
       
     }
     this.highPriLogs = []
+    this.dataCount = 0
   }
 }

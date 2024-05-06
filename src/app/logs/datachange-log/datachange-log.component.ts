@@ -37,7 +37,8 @@ export class DatachangeLogComponent {
   fieldList?: string[]
   entityIdList?: string[]
   usersList?: string[]
-  dataChangeLogs?: DataChangeLogs[]
+  dataChangeLogs: DataChangeLogs[] = [];
+  count:number = 0;
 
 
   ngOnInit() { 
@@ -60,6 +61,7 @@ export class DatachangeLogComponent {
         }
       },(err:any)=>{
         this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -133,6 +135,7 @@ export class DatachangeLogComponent {
         }
       },(err:any)=>{
         this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();
@@ -154,14 +157,15 @@ export class DatachangeLogComponent {
       entityId: undefined
     }
 
-    this.dataChangeLogs = []
+    this.dataChangeLogs = [];
+    this.count = 0;
   }
 
-  getDataChangeLogs() {
+  getDataChangeLogs(isNext:boolean = false,timeStamp?:string) {
     if (this.selectedData.apps == undefined || this.selectedData.days == undefined) {
-      // toast to display appropriate msg
       this._toastr.error('Application and Days must be selected first.', CONSTANTS.ERROR);
-      this.dataChangeLogs = undefined;
+      this.dataChangeLogs = [];
+      this.count = 0;
       return;
     }
 
@@ -189,14 +193,25 @@ export class DatachangeLogComponent {
         req.data.class = this.selectedData.class
       }
 
+      if(timeStamp != undefined || timeStamp != null){
+        req.data.search_after_timestamp = timeStamp
+      }
+
       this._commonService.showLoader();
       this._dataChangeLogService.getDataChangeLog(req).subscribe((res: DataChangeLogResp) => {
         this._commonService.hideLoader();
         if (res.status == CONSTANTS.SUCCESS) {
           if (res.data.logs == null || res.data.logs.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
-            this.dataChangeLogs = undefined
+            if(!isNext){
+              this.dataChangeLogs = []
+              this.count = 0;
+            }
             return;
+          }
+
+          if(!isNext){
+            this.dataChangeLogs = [];
           }
 
           res.data.logs.forEach(log => {
@@ -204,14 +219,17 @@ export class DatachangeLogComponent {
               log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
               log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
             });
+
+            this.dataChangeLogs.push(log);
           })
 
-          this.dataChangeLogs = res.data.logs
+          this.count = this.dataChangeLogs.length;
         } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
       },(err:any)=>{
         this._commonService.hideLoader()
+        this._toastr.error(err,CONSTANTS.ERROR)
       })
     } catch (error) {
       this._commonService.hideLoader();

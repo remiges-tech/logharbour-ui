@@ -62,7 +62,7 @@ export interface ActivityLogs {
 }
 
 export interface ActivityLogData {
-  activitylog: string;
+  activityLog: string;
 }
 
 export interface DebugLogs {
