@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    GoogleMapsModule,
     ToastrModule.forRoot()
   ],
   providers: [],

@@ -54,12 +54,14 @@
           <div class="d-flex align-items-center">
             <input
             min="1"
-            max="100"
+            max="50"
             type="range"
             [(ngModel)]="selectedData.ipPercentage"
             name="ipPercentage"
           />
-          &nbsp;<span>{{selectedData.ipPercentage}}&#37; </span>
+          <div class="text-color">
+            &nbsp;<span>{{selectedData.ipPercentage}}&#37; </span>
+          </div>
           </div>
         </div>
       </div>
@@ -78,18 +80,31 @@
     <button
       type="button"
       class="btn-link fs-20 fw-600 mx-4 pointer"
-      (click)="getUnusualIPs()"
+      
       i18n="@@Submit"
     >
       Submit
     </button>
   </div>
 
-  <div class="card" *ngIf="unusualIPs != undefined && unusualIPs.length > 0">
+  <div class="card no-border m-2" *ngFor="let ip of unusualIPs">
     <div class="card-body">
-      <ul>
-        <li *ngFor="let ip of unusualIPs">{{ ip }}</li>
-      </ul>
+      <h3><strong>IP: </strong> {{ip.ip}}</h3>
     </div>
+    <!-- <h1> Google Maps </h1> -->
+  
+<google-map class="m-2" height="250px"
+            width="100%"
+            [center]="ip.position"
+            [zoom]="zoom"
+            (mapClick)="moveMap($event)"
+            (mapMousemove)="move($event)">
+            <map-marker [position]="ip.position"></map-marker>
+</google-map>
+  
+<!-- <div>Latitude: {{display?.lat}}</div>
+<div>Longitude: {{display?.lng}}</div> -->
   </div>
 </div>
+
+

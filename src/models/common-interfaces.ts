@@ -85,6 +85,5 @@ export interface DebugLogs {
 
 export interface UnusualIPs {
   ip: string;
-  lat: string;
-  long: string;
+  position:google.maps.LatLngLiteral
 }
