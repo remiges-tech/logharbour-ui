@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { HighPriLogs } from 'src/models/common-interfaces';
+import { LogEntry } from 'src/models/common-interfaces';
 import { GetSetReq, HighPriLogReq } from 'src/models/request-interfaces';
 import { AppListResp, GetSetListResp, HighPriLogResp } from 'src/models/response-interfaces';
 import { ApiCommonService } from 'src/services/api-common.service';
@@ -32,7 +32,7 @@ export class HighpriLogComponent {
   }
   appsList?: string[]
   priList?: string[]
-  highPriLogs: HighPriLogs[] = []
+  highPriLogs: LogEntry[] = []
   dataCount:number = 0;
 
 
@@ -141,10 +141,10 @@ export class HighpriLogComponent {
           }
           // Parse old_value and new_value
           res.data.logs.forEach(log => {
-            log.data.changes?.forEach((change:any,index:number) => {
-              log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
-              log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
-            }); 
+            log.data.change_data?.changes.forEach((change:any,index:number) => {
+              log.data.change_data!.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
+              log.data.change_data!.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
+            });
             this.highPriLogs.push(log)
           })
 

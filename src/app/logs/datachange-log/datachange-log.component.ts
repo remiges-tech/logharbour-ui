@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { DataChangeLogs } from 'src/models/common-interfaces';
+import { LogEntry } from 'src/models/common-interfaces';
 import { DataChangeLogReq, GetSetReq } from 'src/models/request-interfaces';
 import { AppListResp, DataChangeLogResp, GetSetListResp } from 'src/models/response-interfaces';
 import { ApiCommonService } from 'src/services/api-common.service';
@@ -37,7 +37,7 @@ export class DatachangeLogComponent {
   fieldList?: string[]
   entityIdList?: string[]
   usersList?: string[]
-  dataChangeLogs: DataChangeLogs[] = [];
+  dataChangeLogs: LogEntry[] = [];
   count:number = 0;
 
 
@@ -215,10 +215,12 @@ export class DatachangeLogComponent {
           }
 
           res.data.logs.forEach(log => {
-            log.data.changes.forEach((change, index) => {
-              log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
-              log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
-            });
+            if(log.data.change_data != undefined){
+              log.data.change_data.changes.forEach((change, index) => {
+                log.data.change_data!.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
+                log.data.change_data!.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
+              });
+            }
 
             this.dataChangeLogs.push(log);
           })

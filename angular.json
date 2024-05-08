@@ -28,7 +28,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize": false,
+            "localize": ["en-US"],
             "i18nMissingTranslation": "error",
             "outputPath": "dist/logharbour",
             "index": "src/index.html",

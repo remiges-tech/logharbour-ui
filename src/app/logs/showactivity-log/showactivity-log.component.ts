@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ActivityLogs } from 'src/models/common-interfaces';
+import { LogEntry } from 'src/models/common-interfaces';
 import { ActivityLogReq, GetSetReq } from 'src/models/request-interfaces';
 import { ActivityLogResp, AppListResp, GetSetListResp } from 'src/models/response-interfaces';
 import { ActivityLogService } from 'src/services/activity-log.service';
@@ -36,7 +36,7 @@ export class ShowactivityLogComponent {
   classList?: string[]
   entityIdList?: string[]
   usersList?: string[]
-  activityLogs: ActivityLogs[] = []
+  activityLogs: LogEntry[] = []
   dataCount: number = 0;
 
   ngOnInit() {

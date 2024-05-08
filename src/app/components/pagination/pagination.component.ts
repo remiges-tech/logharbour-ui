@@ -48,10 +48,11 @@ export class PaginationComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log(changes)
     this.totalPages = new Array(Math.ceil(this.collectionSize / this.itemPerPage));
     if(changes['collectionSize'] && changes['collectionSize'].previousValue > changes['collectionSize'].currentValue){
       this.selectPageNumber(1);
+    }else if(changes['collectionSize'] && changes['collectionSize'].previousValue > 0 && changes['collectionSize'].previousValue < changes['collectionSize'].currentValue){
+      this.selectPageNumber(this.currentPage+1);
     }
   }
 

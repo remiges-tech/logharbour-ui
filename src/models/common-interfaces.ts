@@ -1,4 +1,5 @@
-export interface DataChangeLogs {
+export interface LogEntry {
+  id: string;
   app: string;
   system: string;
   module: string;
@@ -12,74 +13,34 @@ export interface DataChangeLogs {
   status: string;
   remote_ip: string;
   msg: string;
-  data: DataChangeLogData;
+  data: logData;
 }
 
-export interface DataChangeLogData {
+export interface logData {
+  change_data?: changeInfo;
+  activity_data?: string;
+  debug_data?: debugInfo;
+}
+
+export interface changeInfo{
   entity: string;
   op: string;
-  changes: DataChangeLogChanges[];
+  changes: changeDetails[];
 }
 
-export interface DataChangeLogChanges {
+export interface changeDetails{
   field: string;
-  old_value: string;
-  new_value: string;
+  old_value: any;
+  new_value: any;
 }
 
-export interface HighPriLogs {
-  app: string;
-  system: string;
-  module: string;
-  type: string;
-  pri: string;
-  when: string;
-  who: string;
-  op: string;
-  class: string;
-  instance: string;
-  status: string;
-  remote_ip: string;
-  msg: string;
-  data: any;
-}
-
-export interface ActivityLogs {
-  app: string;
-  system: string;
-  module: string;
-  type: string;
-  pri: string;
-  when: string;
-  who: string;
-  op: string;
-  class: string;
-  instance: string;
-  status: number;
-  remote_ip: string;
-  msg: string;
-  data: ActivityLogData;
-}
-
-export interface ActivityLogData {
-  activityLog: string;
-}
-
-export interface DebugLogs {
-  app: string;
-  system: string;
-  module: string;
-  type: string;
-  pri: string;
-  when: string;
-  who: string;
-  op: string;
-  class: string;
-  instance: string;
-  status: string;
-  remote_ip: string;
-  msg: string;
-  trace_id?: any;
+export interface debugInfo{
+  pid: number;
+  runtime: number;
+  file: string;
+  line: number;
+  func: string;
+  stackTrace: string;
   data: any;
 }
 

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { DebugLogs } from 'src/models/common-interfaces';
+import { LogEntry } from 'src/models/common-interfaces';
 import { DebugLogReq, GetSetReq } from 'src/models/request-interfaces';
 import { AppListResp, DebugLogResp, GetSetListResp } from 'src/models/response-interfaces';
 import { ApiCommonService } from 'src/services/api-common.service';
@@ -31,7 +31,7 @@ export class DebugLogComponent {
   moduleList?: string[]
   priList?: string[]
   trace_idList?: string[]
-  debugLogs:DebugLogs[] = []
+  debugLogs:LogEntry[] = []
   dataCount:number = 0;
 
   selectedData:SelectedDataInterface = {
@@ -44,7 +44,6 @@ export class DebugLogComponent {
   ngOnInit(){
     this.getAppsList()
   }
-
 
   getAppsList(){
     try {
@@ -181,12 +180,8 @@ export class DebugLogComponent {
           if(!isNext){
             this.debugLogs = [];
           }
-          // Parse old_value and new_value
+
           res.data.forEach(log => {
-            log.data.changes?.forEach((change:any,index:number) => {
-              log.data.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
-              log.data.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
-            }); 
             this.debugLogs.push(log);
           })
 

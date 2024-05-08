@@ -1,8 +1,5 @@
 import {
-  ActivityLogs,
-  DataChangeLogs,
-  DebugLogs,
-  HighPriLogs,
+  LogEntry,
 } from './common-interfaces';
 
 export interface AppListResp {
@@ -21,7 +18,7 @@ export interface GetSetListResp {
 
 export interface DataChangeLogResp {
   data: {
-    logs: DataChangeLogs[];
+    logs: LogEntry[];
   };
   status: string;
   statusCode: number;
@@ -30,7 +27,7 @@ export interface DataChangeLogResp {
 
 export interface HighPriLogResp {
   data: {
-    logs: HighPriLogs[];
+    logs: LogEntry[];
   };
   status: string;
   statusCode: number;
@@ -39,7 +36,7 @@ export interface HighPriLogResp {
 
 export interface ActivityLogResp {
   data: {
-    LogEntery: ActivityLogs[];
+    LogEntery: LogEntry[];
   };
   status: string;
   statusCode: number;
@@ -47,7 +44,7 @@ export interface ActivityLogResp {
 }
 
 export interface DebugLogResp {
-  data: DebugLogs[];
+  data: LogEntry[];
   status: string;
   statusCode: number;
   message: string;

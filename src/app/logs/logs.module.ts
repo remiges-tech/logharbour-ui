@@ -12,6 +12,7 @@ import { HighpriLogComponent } from './highpri-log/highpri-log.component';
 import { DebugLogComponent } from './debug-log/debug-log.component';
 import { UnusualIpComponent } from './unusual-ip/unusual-ip.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';
+import { LogEntryComponent } from '../components/log-entry/log-entry.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 
 
@@ -22,7 +23,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     HighpriLogComponent,
     DebugLogComponent,
     UnusualIpComponent,
-    PaginationComponent
+    PaginationComponent,
+    LogEntryComponent,
   ],
   imports: [
     NgxJsonViewerModule,
