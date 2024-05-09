@@ -3,19 +3,15 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@App">Application</span> <span class="red-astrik">&#42;</span></label>
+          <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@App">Application</span> <span
+              class="red-astrik">&#42;</span></label>
         </div>
         <div class="col-3">
-          <ng-select
-            [(ngModel)]="selectedData.apps"
-            class="dropdown"
-            id="app"
-            placeholder="--Select App--"
-            i18n-placeholder="@@placedholderApp"
-          >
+          <ng-select [(ngModel)]="selectedData.apps" class="dropdown" id="app" placeholder="--Select App--"
+            i18n-placeholder="@@placedholderApp">
             <ng-option [value]="app" *ngFor="let app of appsList">{{
               app
-            }}</ng-option>
+              }}</ng-option>
           </ng-select>
         </div>
       </div>
@@ -25,20 +21,14 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@days">Days</span> <span class="red-astrik">&#42;</span></label>
+          <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@days">Days</span> <span
+              class="red-astrik">&#42;</span></label>
         </div>
         <div class="col-3">
-          <input
-            [(ngModel)]="selectedData.days"
-            oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
-            type="number"
-            class="dropdown custom-input"
-            id="days"
-            placeholder="--Days--"
-            i18n-placeholder="@@placedholderDays"
-            min="1"
-            style="width: 6rem"
-          />
+          <input [(ngModel)]="selectedData.days"
+            oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" type="number"
+            class="dropdown custom-input" id="days" placeholder="--Days--" i18n-placeholder="@@placedholderDays" min="1"
+            style="width: 6rem" />
         </div>
       </div>
     </div>
@@ -48,20 +38,15 @@
     <div class="col-8">
       <div class="d-flex flex-column flex-md-row">
         <div class="col-3">
-          <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@Unusual">Unusual &#37;</span> <span class="red-astrik">&#42;</span></label>
+          <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@Unusual">Unusual &#37;</span> <span
+              class="red-astrik">&#42;</span></label>
         </div>
         <div class="col-3">
           <div class="d-flex align-items-center">
-            <input
-            min="1"
-            max="50"
-            type="range"
-            [(ngModel)]="selectedData.ipPercentage"
-            name="ipPercentage"
-          />
-          <div class="text-color">
-            &nbsp;<span>{{selectedData.ipPercentage}}&#37; </span>
-          </div>
+            <input min="1" max="50" type="range" [(ngModel)]="selectedData.ipPercentage" name="ipPercentage" />
+            <div class="text-color">
+              &nbsp;<span>{{selectedData.ipPercentage}}&#37; </span>
+            </div>
           </div>
         </div>
       </div>
@@ -69,42 +54,28 @@
   </div>
 
   <div class="mt-4">
-    <button
-      type="button"
-      class="btn-link fs-20 fw-600 pointer"
-      (click)="resetHandler()"
-      i18n="@@Reset"
-    >
+    <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">
       Reset
     </button>
-    <button
-      type="button"
-      class="btn-link fs-20 fw-600 mx-4 pointer"
-      
-      i18n="@@Submit"
-    >
+    <button type="button" class="btn-link fs-20 fw-600 mx-4 pointer" i18n="@@Submit">
       Submit
     </button>
   </div>
 
   <div class="card no-border m-2" *ngFor="let ip of unusualIPs">
-    <div class="card-body">
-      <h3><strong>IP: </strong> {{ip.ip}}</h3>
+    <div class="card-body d-flex" (click)="toggleMap(ip)">
+      <h3><strong>IP : </strong> {{ip.ip}}</h3>
+      <button class="btn map">
+        <i class="fas fa-map-marker-alt fs-20 mb-2 text-danger"></i>
+      </button>
     </div>
-    <!-- <h1> Google Maps </h1> -->
-  
-<google-map class="m-2" height="250px"
-            width="100%"
-            [center]="ip.position"
-            [zoom]="zoom"
-            (mapClick)="moveMap($event)"
-            (mapMousemove)="move($event)">
-            <map-marker [position]="ip.position"></map-marker>
-</google-map>
-  
-<!-- <div>Latitude: {{display?.lat}}</div>
-<div>Longitude: {{display?.lng}}</div> -->
+
+    <div *ngIf="selectedIP === ip">
+      <google-map class="m-2" height="250px" width="100%" [center]="ip.position" [zoom]="zoom"
+        (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
+        <map-marker [position]="ip.position"></map-marker>
+      </google-map>
+    </div>
+
   </div>
 </div>
-
-

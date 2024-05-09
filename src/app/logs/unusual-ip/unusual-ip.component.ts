@@ -30,6 +30,7 @@ export class UnusualIpComponent {
     ipPercentage: 1
   };
   appsList?: string[];
+  selectedIP: UnusualIPs | null = null;
   unusualIPs: UnusualIPs[] = [
     {
       ip: "8.134.222.108",
@@ -85,7 +86,7 @@ export class UnusualIpComponent {
   ngOnInit() {
     this.getAppsList();
   }
-
+  
   getAppsList() {
     try {
       this._commonService.showLoader();
@@ -189,4 +190,9 @@ export class UnusualIpComponent {
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
+
+  toggleMap(ip: UnusualIPs): void {
+    this.selectedIP = this.selectedIP === ip ? null : ip;
+  }
+
 }
