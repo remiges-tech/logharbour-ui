@@ -9,7 +9,7 @@
         <div class="col-3">
           <ng-select [(ngModel)]="selectedData.apps" (change)="appChangeHandler()" class="dropdown" id="app"
             placeholder="--Select App--" i18n-placeholder="@@placedholderApp">
-            <ng-option [value]="app" *ngFor="let app of appsList">{{
+            <ng-option [value]="app" *ngFor="let app of lists.apps">{{
               app
               }}</ng-option>
           </ng-select>
@@ -27,7 +27,7 @@
           <div class="col-5 ml-3">
             <ng-select (change)="classChangeHandler()" [(ngModel)]="selectedData.class" class="dropdown" id="class"
               placeholder="--Select Class--" i18n-placeholder="@@placeholderClass">
-              <ng-option [value]="class" *ngFor="let class of classList">{{
+              <ng-option [value]="class" *ngFor="let class of lists.class">{{
                 class
                 }}</ng-option>
             </ng-select>
@@ -44,7 +44,7 @@
           <div class="col-3">
             <ng-select (change)="entityChangeHandler()" [(ngModel)]="selectedData.entityId" class="dropdown" id="entity"
               placeholder="--Select Entity ID--" i18n-placedholder="@@placeholderEntityID">
-              <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{ entityId }}</ng-option>
+              <ng-option [value]="entityId" *ngFor="let entityId of lists.instance">{{ entityId }}</ng-option>
             </ng-select>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <div class="col-3">
             <ng-select [(ngModel)]="selectedData.fields" class="dropdown" id="field" placeholder="--Select Field--"
               i18n-placeholder="@@placeholderField">
-              <ng-option [value]="field" *ngFor="let field of fieldList">{{
+              <ng-option [value]="field" *ngFor="let field of lists.field">{{
                 field
                 }}</ng-option>
             </ng-select>
@@ -93,7 +93,7 @@
         <div class="col-3">
           <ng-select [(ngModel)]="selectedData.users" class="dropdown" id="user" placeholder="--Select User--"
             i18n-placeholder="@@placeholderUser">
-            <ng-option [value]="user" *ngFor="let user of usersList">{{
+            <ng-option [value]="user" *ngFor="let user of lists.who">{{
               user
               }}</ng-option>
           </ng-select>
@@ -110,7 +110,9 @@
       Submit
     </button>
   </div>
-  <app-pagination #pagination [data]="dataChangeLogs" [collectionSize]="count" (timeStamp)="getDataChangeLogs(true,$event)">
-      <app-log-entry [data]="dataChangeLogs" [itemPerPage]="pagination.itemPerPage" [currentPage]="pagination.currentPage"></app-log-entry>
+  <app-pagination #pagination [data]="dataChangeLogs.data" [collectionSize]="dataChangeLogs.dataCount"
+    (timeStamp)="getDataChangeLogs(true,$event)">
+    <app-log-entry [data]="dataChangeLogs.data" [itemPerPage]="pagination.itemPerPage"
+      [currentPage]="pagination.currentPage"></app-log-entry>
   </app-pagination>
 </div>

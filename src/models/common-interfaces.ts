@@ -1,3 +1,19 @@
+export interface commonLists {
+  apps: string[];
+  class?: string [];
+  instance?: string [];
+  field?: string [];
+  who?: string [];
+  module?: string [];
+  pri?: string [];
+  trace_id?: string [];
+}
+
+export interface logData{
+  data: LogEntry[],
+  dataCount: number,
+}
+
 export interface LogEntry {
   id: string;
   app: string;

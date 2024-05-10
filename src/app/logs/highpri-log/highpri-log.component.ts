@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { LogEntry } from 'src/models/common-interfaces';
-import { GetSetReq, HighPriLogReq } from 'src/models/request-interfaces';
-import { AppListResp, GetSetListResp, HighPriLogResp } from 'src/models/response-interfaces';
-import { ApiCommonService } from 'src/services/api-common.service';
+import { LogEntry, commonLists, logData } from 'src/models/common-interfaces';
+import { HighPriLogReq } from 'src/models/request-interfaces';
+import { HighPriLogResp } from 'src/models/response-interfaces';
 import { CommonService } from 'src/services/common.service';
-import { CONSTANTS } from 'src/services/constants.service';
+import { CONSTANTS, GETSETFIELDS } from 'src/services/constants.service';
 import { HighpriLogService } from 'src/services/highpri-log.service';
+import { CommonMethodsService } from '../common-methods.service';
 
 interface SelectedDataInterface{
   apps: string | undefined,
@@ -22,7 +22,7 @@ interface SelectedDataInterface{
 export class HighpriLogComponent {
   fileName: string = 'HighpriLogComponent';
   private _highPriLogService = inject(HighpriLogService);
-  private _apiCommonService = inject(ApiCommonService);
+  private _commonMethodService = inject(CommonMethodsService);
   private _commonService = inject(CommonService);
   private _toastr = inject(ToastrService);
   selectedData:SelectedDataInterface = {
@@ -30,82 +30,35 @@ export class HighpriLogComponent {
     pri: undefined,
     days: 50
   }
-  appsList?: string[]
-  priList?: string[]
-  highPriLogs: LogEntry[] = []
-  dataCount:number = 0;
+  lists: commonLists = {
+    apps: [],
+    pri: []
+  }
+  highPriLogs: logData = {
+    data: [],
+    dataCount: 0
+  };
 
 
   ngOnInit(){
-    this.getAppsList()
+    this._commonMethodService.getAppsList(this.lists)
   }
 
-
-  getAppsList(){
-    try {
-      this._commonService.showLoader();
-      this._apiCommonService.getAppsList().subscribe((res:AppListResp) => {
-        this._commonService.hideLoader();
-        if(res.status == CONSTANTS.SUCCESS){
-          this.appsList = res.data
-        }else{
-          this._toastr.error(res?.message, CONSTANTS.ERROR);
-        }
-      },(err:any) => {
-        this._commonService.hideLoader()
-        this._toastr.error(err,CONSTANTS.ERROR)
-      })
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getAppsList',
-        msg: error
-      });
-    }
-  }
-
-  getDropdownsValue(field: 'pri' ){
-    if(this.selectedData.apps == undefined){
+  appChangeHandler() {
+    if (this.selectedData.apps == undefined || this.selectedData.apps == null) {
       return;
     }
-    try {
-      let req:GetSetReq = {
-        data:{
-          app: this.selectedData.apps,
-          setAttr: field
-        }
-      }
-      this._commonService.showLoader();
-      this._apiCommonService.getSetList(req).subscribe((res:GetSetListResp) => {
-        this._commonService.hideLoader();
-        if(res.status == CONSTANTS.SUCCESS){
-          switch(field){
-            case 'pri' : this.priList = res.data
-            break;
-          }
-        }else{
-          this._toastr.error(res?.message, CONSTANTS.ERROR);
-        }
-      },(err:any) => {
-        this._commonService.hideLoader();
-        this._toastr.error(err,CONSTANTS.ERROR)
-      })
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getDropdownsValue',
-        msg: error
-      });
-    }
+
+    this._commonMethodService.getDropdownsValue(this.selectedData.apps, this.lists, GETSETFIELDS.PRIORITY);
   }
 
   getHighPriLogs(isNext:boolean = false,timeStamp?:string){
     if(this.selectedData.apps == undefined || this.selectedData.days == undefined || this.selectedData.pri == undefined){
       this._toastr.error('Application, Priority and Days are mandatory fields.', CONSTANTS.ERROR);
-      this.highPriLogs = [];
-      this.dataCount = 0;
+      this.highPriLogs ={
+        data: [],
+        dataCount: 0
+      };
       return;
     }
 
@@ -114,8 +67,7 @@ export class HighpriLogComponent {
         data:{
           app: this.selectedData.apps,
           pri: this.selectedData.pri,
-          days: this.selectedData.days,
-          // search_after_timestamp: "2024-04-18T10:56:43.0427498Z"
+          days: this.selectedData.days
         }
       }
 
@@ -130,14 +82,16 @@ export class HighpriLogComponent {
           if (res.data.logs == null || res.data.logs.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
             if(!isNext){
-              this.highPriLogs = []
-              this.dataCount = 0
+              this.highPriLogs = {
+                data: [],
+                dataCount: 0
+              };
             }
             return;
           }
 
           if(!isNext){
-            this.highPriLogs = []
+            this.highPriLogs.data = []
           }
           // Parse old_value and new_value
           res.data.logs.forEach(log => {
@@ -145,10 +99,10 @@ export class HighpriLogComponent {
               log.data.change_data!.changes[index].old_value = this._commonService.parseStringValue(change.old_value);
               log.data.change_data!.changes[index].new_value = this._commonService.parseStringValue(change.new_value);
             });
-            this.highPriLogs.push(log)
+            this.highPriLogs.data.push(log)
           })
 
-          this.dataCount = this.highPriLogs.length
+          this.highPriLogs.dataCount = this.highPriLogs.data.length
           // Assign updated logsvalue to the variable
         }else{
           this._toastr.error(res?.message, CONSTANTS.ERROR);
@@ -174,7 +128,9 @@ export class HighpriLogComponent {
       days: 50,
       
     }
-    this.highPriLogs = []
-    this.dataCount = 0
+    this.highPriLogs = {
+      data: [],
+      dataCount: 0
+    };
   }
 }

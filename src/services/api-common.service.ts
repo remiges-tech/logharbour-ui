@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { HttpService } from './http.service';
-import * as Enums from './constants.service';
+import { CONSTANTS } from './constants.service';
 import { CommonService } from './common.service';
 import { GetSetReq } from 'src/models/request-interfaces';
 
@@ -9,17 +9,17 @@ import { GetSetReq } from 'src/models/request-interfaces';
   providedIn: 'root'
 })
 export class ApiCommonService {
-  fileName:string = 'ApiCommonService'
+  fileName: string = 'ApiCommonService'
   _httpService = inject(HttpService);
   _commonService = inject(CommonService);
 
   constructor() { }
 
-  getAppsList(): any {
+  getApps(): any {
     try {
       let dataObj = {
         method: 'get',
-        api_url: environment.apiUrl + Enums.CONSTANTS.GET_APPS_LIST,
+        api_url: environment.apiUrl + CONSTANTS.GET_APPS_LIST,
         local_json_file: '',
         param_data: {},
         mapcol: false,
@@ -29,17 +29,17 @@ export class ApiCommonService {
     } catch (error) {
       this._commonService.log({
         fileName: this.fileName,
-        functionName: 'getAppsList',
+        functionName: 'getApps',
         msg: error
       });
     }
   }
 
-  getSetList(req:GetSetReq): any {
+  getSetList(req: GetSetReq): any {
     try {
       let dataObj = {
         method: 'post',
-        api_url: environment.apiUrl + Enums.CONSTANTS.GET_SET_LIST,
+        api_url: environment.apiUrl + CONSTANTS.GET_SET_LIST,
         local_json_file: '',
         param_data: req,
         mapcol: false,

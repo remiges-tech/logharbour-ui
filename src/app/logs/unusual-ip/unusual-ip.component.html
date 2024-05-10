@@ -9,7 +9,7 @@
         <div class="col-3">
           <ng-select [(ngModel)]="selectedData.apps" class="dropdown" id="app" placeholder="--Select App--"
             i18n-placeholder="@@placedholderApp">
-            <ng-option [value]="app" *ngFor="let app of appsList">{{
+            <ng-option [value]="app" *ngFor="let app of lists.apps">{{
               app
               }}</ng-option>
           </ng-select>

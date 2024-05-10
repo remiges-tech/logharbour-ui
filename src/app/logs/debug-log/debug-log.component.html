@@ -3,11 +3,13 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@App">Application</span> <span class="red-astrik">&#42;</span></label>
+                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@App">Application</span> <span
+                            class="red-astrik">&#42;</span></label>
                 </div>
                 <div class="col-3">
-                    <ng-select [(ngModel)]="selectedData.apps" i18n-placeholder="@@placedholderApp" class="dropdown" (change)="appChangeHandler()"  placeholder="--Select App--">
-                        <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
+                    <ng-select [(ngModel)]="selectedData.apps" i18n-placeholder="@@placedholderApp" class="dropdown"
+                        (change)="appChangeHandler()" placeholder="--Select App--">
+                        <ng-option [value]="app" *ngFor="let app of lists.apps">{{app}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -17,11 +19,13 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@Module">Module</span> <span class="red-astrik">&#42;</span></label>
+                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@Module">Module</span> <span
+                            class="red-astrik">&#42;</span></label>
                 </div>
                 <div class="col-5 ml-3">
-                    <ng-select [(ngModel)]="selectedData.module" i18n-placeholder="@@placeholderModule" (change)="moduleChangeHandler()" class="dropdown" id="module" placeholder="--Select Module--">
-                        <ng-option [value]="module" *ngFor="let module of moduleList">{{module}}</ng-option>
+                    <ng-select [(ngModel)]="selectedData.module" i18n-placeholder="@@placeholderModule"
+                        (change)="moduleChangeHandler()" class="dropdown" id="module" placeholder="--Select Module--">
+                        <ng-option [value]="module" *ngFor="let module of lists.module">{{module}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -31,11 +35,13 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@Priortity">Priority</span> <span class="red-astrik">&#42;</span></label>
+                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@Priortity">Priority</span> <span
+                            class="red-astrik">&#42;</span></label>
                 </div>
                 <div class="col-5 ml-3">
-                    <ng-select [(ngModel)]="selectedData.pri" i18n-placeholder="@@placeholderPriority" class="dropdown" id="priority" placeholder="--Select Priority">
-                        <ng-option [value]="pri" *ngFor="let pri of priList">{{pri}}</ng-option>
+                    <ng-select [(ngModel)]="selectedData.pri" i18n-placeholder="@@placeholderPriority" class="dropdown"
+                        id="priority" placeholder="--Select Priority">
+                        <ng-option [value]="pri" *ngFor="let pri of lists.pri">{{pri}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -45,11 +51,14 @@
         <div class="col-8">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-3">
-                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@days">Days</span> <span class="red-astrik">&#42;</span></label>
+                    <label class="fs-20 fw-600 ml-3 text-color"><span i18n="@@days">Days</span> <span
+                            class="red-astrik">&#42;</span></label>
                 </div>
                 <div class="col-3">
-                    <input type="number" [(ngModel)]="selectedData.days" oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null" class="dropdown custom-input" 
-                    i18n-placeholder="@@placedholderDays" id="days" placeholder="--Days--" min="1" style="width: 6rem;">
+                    <input type="number" [(ngModel)]="selectedData.days"
+                        oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
+                        class="dropdown custom-input" i18n-placeholder="@@placedholderDays" id="days"
+                        placeholder="--Days--" min="1" style="width: 6rem;">
                 </div>
             </div>
         </div>
@@ -70,12 +79,15 @@
     </div> -->
 
     <div class="mt-4">
-        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">Reset</button>
-        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getDebugLogs()" i18n="@@Submit">Submit</button>
+        <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()"
+            i18n="@@Reset">Reset</button>
+        <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getDebugLogs()"
+            i18n="@@Submit">Submit</button>
     </div>
 
-    <app-pagination #pagination [data]="debugLogs" [collectionSize]="dataCount" (timeStamp)="getDebugLogs(true,$event)">
-        <app-log-entry [data]="debugLogs" [currentPage]="pagination.currentPage" [itemPerPage]="pagination.itemPerPage"></app-log-entry>
+    <app-pagination #pagination [data]="debugLogs.data" [collectionSize]="debugLogs.dataCount"
+        (timeStamp)="getDebugLogs(true,$event)">
+        <app-log-entry [data]="debugLogs.data" [currentPage]="pagination.currentPage"
+            [itemPerPage]="pagination.itemPerPage"></app-log-entry>
     </app-pagination>
 </div>
-

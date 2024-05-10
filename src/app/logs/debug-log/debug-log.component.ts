@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { LogEntry } from 'src/models/common-interfaces';
-import { DebugLogReq, GetSetReq } from 'src/models/request-interfaces';
-import { AppListResp, DebugLogResp, GetSetListResp } from 'src/models/response-interfaces';
-import { ApiCommonService } from 'src/services/api-common.service';
+import { commonLists, logData } from 'src/models/common-interfaces';
+import { DebugLogReq } from 'src/models/request-interfaces';
+import { DebugLogResp } from 'src/models/response-interfaces';
 import { CommonService } from 'src/services/common.service';
-import { CONSTANTS } from 'src/services/constants.service';
+import { CONSTANTS, GETSETFIELDS } from 'src/services/constants.service';
 import { DebugLogService } from 'src/services/debug-log.service';
+import { CommonMethodsService } from '../common-methods.service';
 
-interface SelectedDataInterface{
+interface SelectedDataInterface {
   apps: string | undefined,
   module: string | undefined
   pri: string | undefined
@@ -24,49 +24,29 @@ interface SelectedDataInterface{
 export class DebugLogComponent {
   fileName: string = 'DebugLogComponent';
   private _debugLogService = inject(DebugLogService);
-  private _apiCommonService = inject(ApiCommonService);
+  private _commonMethodService = inject(CommonMethodsService);
   private _commonService = inject(CommonService);
   private _toastr = inject(ToastrService);
-  appsList?: string[]
-  moduleList?: string[]
-  priList?: string[]
-  trace_idList?: string[]
-  debugLogs:LogEntry[] = []
-  dataCount:number = 0;
+  lists: commonLists = {
+    apps: [],
+    module: [],
+    pri: [],
+    trace_id: []
+  }
+  debugLogs: logData = {
+    data: [],
+    dataCount: 0
+  };
 
-  selectedData:SelectedDataInterface = {
+  selectedData: SelectedDataInterface = {
     apps: undefined,
     module: undefined,
     pri: undefined,
     days: 50
   }
 
-  ngOnInit(){
-    this.getAppsList()
-  }
-
-  getAppsList(){
-    try {
-      this._commonService.showLoader();
-      this._apiCommonService.getAppsList().subscribe((res:AppListResp) => {
-        this._commonService.hideLoader();
-        if(res.status == CONSTANTS.SUCCESS){
-          this.appsList = res.data
-        }else{
-          this._toastr.error(res?.message, CONSTANTS.ERROR);
-        }
-      },(err:any) => {
-        this._commonService.hideLoader()
-        this._toastr.error(err,CONSTANTS.ERROR)
-      })
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getAppsList',
-        msg: error
-      });
-    }
+  ngOnInit() {
+    this._commonMethodService.getAppsList(this.lists)
   }
 
   appChangeHandler() {
@@ -77,8 +57,7 @@ export class DebugLogComponent {
       return;
     }
 
-    this.getDropdownsValue('module');
-    this.getDropdownsValue('pri');
+    this._commonMethodService.getDropdownsValue(this.selectedData.apps, this.lists, GETSETFIELDS.MODULE);
   }
 
   moduleChangeHandler() {
@@ -88,9 +67,8 @@ export class DebugLogComponent {
       return;
     }
 
-    this.getDropdownsValue('pri');
+    this._commonMethodService.getDropdownsValue(this.selectedData.apps, this.lists, GETSETFIELDS.PRIORITY);
   }
-
 
   // priChangeHandler() {
   //   if (this.selectedData.entityId == undefined || this.selectedData.entityId == null) {
@@ -100,99 +78,62 @@ export class DebugLogComponent {
 
   //   this.getDropdownsValue('field');
   // }
-  
-  getDropdownsValue(field: 'module' | 'pri' | 'trace_id') {
-    if (this.selectedData.apps == undefined) {
-      return;
-    }
 
-    try {
-      let req: GetSetReq = {
-        data: {
-          app: this.selectedData.apps,
-          setAttr: field
-        }
-      }
-      this._commonService.showLoader();
-      this._apiCommonService.getSetList(req).subscribe((res: GetSetListResp) => {
-        this._commonService.hideLoader();
-        if (res.status == CONSTANTS.SUCCESS) {
-          switch (field) {
-            case 'module': this.moduleList = res.data
-              break;
-            case 'pri': this.priList = res.data
-              break;
-            case 'trace_id': this.trace_idList = res.data
-              break;
-          }
-        } else {
-          this._toastr.error(res?.message, CONSTANTS.ERROR);
-        }
-      },(err:any)=>{
-        this._commonService.hideLoader()
-        this._toastr.error(err,CONSTANTS.ERROR)
-      })
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getDropdownsValue',
-        msg: error
-      });
-    }
-  }
 
-  getDebugLogs(isNext:boolean = false,timestamp?:string){
-    if(this.selectedData.apps == undefined || this.selectedData.module == undefined || this.selectedData.days == undefined || this.selectedData.pri == undefined){
+  getDebugLogs(isNext: boolean = false, timestamp?: string) {
+    if (this.selectedData.apps == undefined || this.selectedData.module == undefined || this.selectedData.days == undefined || this.selectedData.pri == undefined) {
       this._toastr.error('Application, Module, Priority and Days are mandatory fields.', CONSTANTS.ERROR);
-      this.debugLogs = [];
-      this.dataCount = 0;
+      this.debugLogs = {
+        data: [],
+        dataCount: 0
+      };
       return;
     }
 
     try {
       let req: DebugLogReq = {
-        data:{
+        data: {
           app: this.selectedData.apps,
           module: this.selectedData.module,
           pri: this.selectedData.pri,
-          days: this.selectedData.days,
-          // search_after_timestamp: "2024-04-18T10:56:43.0427498Z"
+          days: this.selectedData.days
         }
       }
 
-      if(timestamp != undefined && timestamp != null){
+      if (timestamp != undefined && timestamp != null) {
         req.data.search_after_timestamp = timestamp;
       }
 
       this._commonService.showLoader();
-      this._debugLogService.getDebugLog(req).subscribe((res:DebugLogResp) => {
+      this._debugLogService.getDebugLog(req).subscribe((res: DebugLogResp) => {
         this._commonService.hideLoader();
-        if(res.status == CONSTANTS.SUCCESS){
+        if (res.status == CONSTANTS.SUCCESS) {
           if (res.data == null || res.data.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
-            if(!isNext){
-              this.debugLogs = []
-              this.dataCount = 0
+            if (!isNext) {
+              this.debugLogs = {
+                data: [],
+                dataCount: 0
+              };
             }
             return;
           }
-          if(!isNext){
-            this.debugLogs = [];
+          if (!isNext) {
+            this.debugLogs.data = [];
           }
 
           res.data.forEach(log => {
-            this.debugLogs.push(log);
+            this.debugLogs.data.push(log);
           })
 
-          this.dataCount = this.debugLogs.length;
-        }else{
+          this.debugLogs.dataCount = this.debugLogs.data.length;
+        } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
-      },(err:any) => {
+      }, (err: any) => {
         this._commonService.hideLoader();
-        this._toastr.error(err,CONSTANTS.ERROR)
-      }) 
+        this._toastr.error(err, CONSTANTS.ERROR)
+      })
     } catch (error) {
       this._commonService.hideLoader();
       this._commonService.log({
@@ -209,10 +150,12 @@ export class DebugLogComponent {
       module: undefined,
       pri: undefined,
       days: 50,
-      
+
     }
-    this.debugLogs = []
-    this.dataCount = 0;
+    this.debugLogs = {
+      data: [],
+      dataCount: 0
+    };
   }
 
 }

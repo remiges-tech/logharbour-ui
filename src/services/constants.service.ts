@@ -13,3 +13,13 @@ export enum CONSTANTS {
   UNUSUAL_IP_API = '/unusalip',
   PLEASE_WAIT_PROCESSING_YOUR_DATA = 'Please wait, processing your data',
 }
+
+export enum GETSETFIELDS {
+  CLASS = 'class',
+  INSTANCE = 'instance',
+  FIELD = 'field',
+  WHO = 'who',
+  MODULE = 'module',
+  PRIORITY = 'pri',
+  TRACE_ID = 'trace_id'
+}

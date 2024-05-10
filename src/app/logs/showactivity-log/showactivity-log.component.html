@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-3">
                     <ng-select class="dropdown" i18n-placeholder="@@placedholderApp" [(ngModel)]="selectedData.apps" id="app" (change)="appChangeHandler()" placeholder="--Select App--">
-                        <ng-option [value]="app" *ngFor="let app of appsList">{{app}}</ng-option>
+                        <ng-option [value]="app" *ngFor="let app of lists.apps">{{app}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-5 ml-3">
                         <ng-select [(ngModel)]="selectedData.class" i18n-placeholder="@@placeholderClass" (change)="classChangeHandler()" class="dropdown" id="class" placeholder="--Select Class--">
-                            <ng-option [value]="class" *ngFor="let class of classList">{{class}}</ng-option>
+                            <ng-option [value]="class" *ngFor="let class of lists.class">{{class}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-3">
                         <ng-select [(ngModel)]="selectedData.entityId" i18n-placedholder="@@placeholderEntityID" class="dropdown" id="entity" placeholder="--Select Entity ID--">
-                            <ng-option [value]="entityId" *ngFor="let entityId of entityIdList">{{entityId}}</ng-option>
+                            <ng-option [value]="entityId" *ngFor="let entityId of lists.instance">{{entityId}}</ng-option>
                         </ng-select>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-3">
                     <ng-select [(ngModel)]="selectedData.users" i18n-placeholder="@@placeholderUser" class="dropdown" id="user" placeholder="--Select User--">
-                        <ng-option [value]="user" *ngFor="let user of usersList">{{user}}</ng-option>
+                        <ng-option [value]="user" *ngFor="let user of lists.who">{{user}}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -73,8 +73,8 @@
         <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">Reset</button>
         <button type="button" class="btn-link  fs-20 fw-600 mx-4 pointer" (click)="getActivityLogs()" i18n="@@Submit">Submit</button>
     </div>
-    <app-pagination #pagination [data]="activityLogs" [collectionSize]="dataCount" (timeStamp)="getActivityLogs(true,$event)">
-        <app-log-entry [data]="activityLogs" [currentPage]="pagination.currentPage" [itemPerPage]="pagination.itemPerPage"></app-log-entry>
+    <app-pagination #pagination [data]="activityLogs.data" [collectionSize]="activityLogs.dataCount" (timeStamp)="getActivityLogs(true,$event)">
+        <app-log-entry [data]="activityLogs.data" [currentPage]="pagination.currentPage" [itemPerPage]="pagination.itemPerPage"></app-log-entry>
     </app-pagination>
 
 </div>

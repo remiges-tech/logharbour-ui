@@ -1,18 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { LogEntry } from 'src/models/common-interfaces';
-import { ActivityLogReq, GetSetReq } from 'src/models/request-interfaces';
-import { ActivityLogResp, AppListResp, GetSetListResp } from 'src/models/response-interfaces';
+import { LogEntry, commonLists, logData } from 'src/models/common-interfaces';
+import { ActivityLogReq } from 'src/models/request-interfaces';
+import { ActivityLogResp } from 'src/models/response-interfaces';
 import { ActivityLogService } from 'src/services/activity-log.service';
-import { ApiCommonService } from 'src/services/api-common.service';
 import { CommonService } from 'src/services/common.service';
-import { CONSTANTS } from 'src/services/constants.service';
+import { CONSTANTS, GETSETFIELDS } from 'src/services/constants.service';
+import { CommonMethodsService } from '../common-methods.service';
 interface SelectedDataInterface {
   apps: string | undefined,
   class?: string,
   users?: string,
   entityId?: string,
-  days: number 
+  days: number
 }
 
 @Component({
@@ -25,61 +25,38 @@ interface SelectedDataInterface {
 export class ShowactivityLogComponent {
   fileName: string = 'ShowactivityLogComponent';
   private _activityLogService = inject(ActivityLogService);
-  private _apiCommonService = inject(ApiCommonService);
+  private _commonMethodService = inject(CommonMethodsService);
   private _commonService = inject(CommonService);
   private _toastr = inject(ToastrService);
   selectedData: SelectedDataInterface = {
     apps: undefined,
     days: 50
   }
-  appsList?: string[]
-  classList?: string[]
-  entityIdList?: string[]
-  usersList?: string[]
-  activityLogs: LogEntry[] = []
-  dataCount: number = 0;
+  lists: commonLists = {
+    apps: [],
+    class: [],
+    instance: [],
+    who: []
+  }
+  activityLogs: logData = {
+    data: [],
+    dataCount: 0
+  };
 
   ngOnInit() {
-    this.getAppsList()
-  }
-
-  getAppsList() {
-    try {
-      this._commonService.showLoader();
-      this._apiCommonService.getAppsList().subscribe((res: AppListResp) => {
-        this._commonService.hideLoader();
-        if (res.status == CONSTANTS.SUCCESS) {
-          if (res.data == null || res.data.length == 0) {
-            this._toastr.error('No data Found!', CONSTANTS.ERROR);
-            return;
-          }
-          this.appsList = res.data
-        } else {
-          this._toastr.error(res?.message, CONSTANTS.ERROR);
-        }
-      },(err:any)=>{
-        this._commonService.hideLoader();
-        this._toastr.error(err,CONSTANTS.ERROR)
-      })
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getAppsList',
-        msg: error
-      });
-    }
+    this._commonMethodService.getAppsList(this.lists)
   }
 
   appChangeHandler() {
     if (this.selectedData.apps == undefined || this.selectedData.apps == null) {
       this.selectedData.class = undefined;
       this.selectedData.entityId = undefined;
+      this.selectedData.users = undefined;
       return;
     }
 
-    this.getDropdownsValue('class');
-    this.getDropdownsValue('who');
+    this._commonMethodService.getDropdownsValue(this.selectedData.apps, this.lists, GETSETFIELDS.CLASS);
+    this._commonMethodService.getDropdownsValue(this.selectedData.apps, this.lists, GETSETFIELDS.WHO);
   }
 
   classChangeHandler() {
@@ -88,48 +65,7 @@ export class ShowactivityLogComponent {
       return;
     }
 
-    this.getDropdownsValue('instance');
-  }
-
-  getDropdownsValue(field: 'class' | 'instance' | 'who') {
-    if (this.selectedData.apps == undefined) {
-      return;
-    }
-
-    try {
-      let req: GetSetReq = {
-        data: {
-          app: this.selectedData.apps,
-          setAttr: field
-        }
-      }
-      this._commonService.showLoader();
-      this._apiCommonService.getSetList(req).subscribe((res: GetSetListResp) => {
-        this._commonService.hideLoader();
-        if (res.status == CONSTANTS.SUCCESS) {
-          switch (field) {
-            case 'class': this.classList = res.data
-              break;
-            case 'instance': this.entityIdList = res.data
-              break;
-            case 'who': this.usersList = res.data
-              break;
-          }
-        } else {
-          this._toastr.error(res?.message, CONSTANTS.ERROR);
-        }
-      },(err:any)=>{
-        this._commonService.hideLoader()
-        this._toastr.error(err,CONSTANTS.ERROR)
-      })
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getDropdownsValue',
-        msg: error
-      });
-    }
+    this._commonMethodService.getDropdownsValue(this.selectedData.apps, this.lists, GETSETFIELDS.INSTANCE);
   }
 
   resetHandler() {
@@ -141,15 +77,19 @@ export class ShowactivityLogComponent {
       entityId: undefined
     }
 
-    this.activityLogs = []
-    this.dataCount = 0
+    this.activityLogs = {
+      data: [],
+      dataCount: 0
+    };
   }
 
-  getActivityLogs(isNext:boolean=false,timeStamp?:string) {
+  getActivityLogs(isNext: boolean = false, timeStamp?: string) {
     if (this.selectedData.apps == undefined || this.selectedData.days == undefined) {
       this._toastr.error('Application and Days must be selected first.', CONSTANTS.ERROR);
-      this.activityLogs = [];
-      this.dataCount = 0;
+      this.activityLogs = {
+        data: [],
+        dataCount: 0
+      };
       return;
     }
 
@@ -173,7 +113,7 @@ export class ShowactivityLogComponent {
         req.data.class = this.selectedData.class
       }
 
-      if(timeStamp != undefined || timeStamp != null){
+      if (timeStamp != undefined || timeStamp != null) {
         req.data.search_after_timestamp = timeStamp;
       }
 
@@ -184,29 +124,31 @@ export class ShowactivityLogComponent {
           if (res.data.LogEntery == null || res.data.
             LogEntery.length == 0) {
             this._toastr.error('No data Found!', CONSTANTS.ERROR);
-            if(!isNext){
-              this.activityLogs = []
-              this.dataCount = 0;
+            if (!isNext) {
+              this.activityLogs = {
+                data: [],
+                dataCount: 0
+              };
             }
             return;
           }
 
-          if(!isNext){
-            this.activityLogs = [];
+          if (!isNext) {
+            this.activityLogs.data = [];
           }
 
-          res.data.LogEntery.forEach((entry:any) => {
-            this.activityLogs.push(entry);
+          res.data.LogEntery.forEach((entry: any) => {
+            this.activityLogs.data.push(entry);
           })
 
-          this.dataCount = this.activityLogs.length;
+          this.activityLogs.dataCount = this.activityLogs.data.length;
 
         } else {
           this._toastr.error(res?.message, CONSTANTS.ERROR);
         }
-      },(err:any)=>{
+      }, (err: any) => {
         this._commonService.hideLoader()
-        this._toastr.error(err,CONSTANTS.ERROR)
+        this._toastr.error(err, CONSTANTS.ERROR)
       })
 
     } catch (error) {

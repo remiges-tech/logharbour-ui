@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UnusualIPs } from 'src/models/common-interfaces';
-import { UnusualIPReq } from 'src/models/request-interfaces';
-import { AppListResp, UnusualIPResp } from 'src/models/response-interfaces';
-import { ApiCommonService } from 'src/services/api-common.service';
+import { UnusualIPs, commonLists } from 'src/models/common-interfaces';
+import { UnusualIPResp } from 'src/models/response-interfaces';
 import { CommonService } from 'src/services/common.service';
 import { CONSTANTS } from 'src/services/constants.service';
 import { UnusualIpService } from 'src/services/unusual-ip.service';
+import { CommonMethodsService } from '../common-methods.service';
+import { UnusualIPReq } from 'src/models/request-interfaces';
 
 interface SelectedDataInterface {
   apps: string | undefined;
@@ -20,7 +20,7 @@ interface SelectedDataInterface {
 })
 export class UnusualIpComponent {
   fileName = 'UnusualIpComponent';
-  private _apiCommonService = inject(ApiCommonService);
+  private _commonMethodService = inject(CommonMethodsService);
   private _unusualIPService = inject(UnusualIpService);
   private _commonService = inject(CommonService);
   private _toastr = inject(ToastrService);
@@ -29,7 +29,9 @@ export class UnusualIpComponent {
     days: 50,
     ipPercentage: 1
   };
-  appsList?: string[];
+  lists:commonLists = {
+    apps: []
+  }
   selectedIP: UnusualIPs | null = null;
   unusualIPs: UnusualIPs[] = [
     {
@@ -84,38 +86,7 @@ export class UnusualIpComponent {
   zoom = 10;
 
   ngOnInit() {
-    this.getAppsList();
-  }
-  
-  getAppsList() {
-    try {
-      this._commonService.showLoader();
-      this._apiCommonService.getAppsList().subscribe(
-        (res: AppListResp) => {
-          this._commonService.hideLoader();
-          if (res.status == CONSTANTS.SUCCESS) {
-            if (res.data == null || res.data.length == 0) {
-              this._toastr.error('No Applicatios found!', CONSTANTS.ERROR);
-              return;
-            }
-            this.appsList = res.data;
-          } else {
-            this._toastr.error(res?.message, CONSTANTS.ERROR);
-          }
-        },
-        (err: any) => {
-          this._commonService.hideLoader();
-          this._toastr.error(err, CONSTANTS.ERROR)
-        }
-      );
-    } catch (error) {
-      this._commonService.hideLoader();
-      this._commonService.log({
-        fileName: this.fileName,
-        functionName: 'getAppsList',
-        msg: error,
-      });
-    }
+    this._commonMethodService.getAppsList(this.lists);
   }
 
   resetHandler() {
@@ -128,59 +99,59 @@ export class UnusualIpComponent {
     this.unusualIPs = [];
   }
 
-  // getUnusualIPs() {
-  //   if (
-  //     this.selectedData.apps == undefined ||
-  //     this.selectedData.days == undefined
-  //   ) {
-  //     this._toastr.error(
-  //       'Application, Days and unusual percentage are mandatory fields.',
-  //       CONSTANTS.ERROR
-  //     );
-  //     this.unusualIPs = undefined;
-  //     return;
-  //   }
+  getUnusualIPs() {
+    if (
+      this.selectedData.apps == undefined ||
+      this.selectedData.days == undefined
+    ) {
+      this._toastr.error(
+        'Application, Days and unusual percentage are mandatory fields.',
+        CONSTANTS.ERROR
+      );
+      // this.unusualIPs = undefined;
+      return;
+    }
 
-  //   try {
-  //     let req: UnusualIPReq = {
-  //       data: {
-  //         app: this.selectedData.apps,
-  //         days: this.selectedData.days,
-  //         unusualPercent: this.selectedData.ipPercentage,
-  //       },
-  //     };
+    try {
+      let req: UnusualIPReq = {
+        data: {
+          app: this.selectedData.apps,
+          days: this.selectedData.days,
+          unusualPercent: this.selectedData.ipPercentage,
+        },
+      };
 
-  //     this._commonService.showLoader();
-  //     this.unusualIPs = [];
-  //     this._unusualIPService.getUnusualIP(req).subscribe(
-  //       (res: UnusualIPResp) => {
-  //         this._commonService.hideLoader();
-  //         if (res.status == CONSTANTS.SUCCESS) {
-  //           if (res.data == null || res.data.length == 0) {
-  //             this._toastr.error('No data Found!', CONSTANTS.ERROR);
-  //             this.unusualIPs = undefined;
-  //             return;
-  //           }
+      this._commonService.showLoader();
+      this.unusualIPs = [];
+      this._unusualIPService.getUnusualIP(req).subscribe(
+        (res: UnusualIPResp) => {
+          this._commonService.hideLoader();
+          if (res.status == CONSTANTS.SUCCESS) {
+            if (res.data == null || res.data.length == 0) {
+              this._toastr.error('No data Found!', CONSTANTS.ERROR);
+              // this.unusualIPs = undefined;
+              return;
+            }
 
-  //           this.unusualIPs = res.data;
-  //         } else {
-  //           this._toastr.error(res?.message, CONSTANTS.ERROR);
-  //         }
-  //       },
-  //       (err: any) => {
-  //         this._commonService.hideLoader();
-  //         this._toastr.error(err,CONSTANTS.ERROR)
-  //       }
-  //     );
-  //   } catch (error) {
-  //     this._commonService.hideLoader();
-  //     this._commonService.log({
-  //       fileName: this.fileName,
-  //       functionName: 'getUnusualIPs',
-  //       msg: error,
-  //     });
-  //   }
-  // }
+            // this.unusualIPs = res.data;
+          } else {
+            this._toastr.error(res?.message, CONSTANTS.ERROR);
+          }
+        },
+        (err: any) => {
+          this._commonService.hideLoader();
+          this._toastr.error(err,CONSTANTS.ERROR)
+        }
+      );
+    } catch (error) {
+      this._commonService.hideLoader();
+      this._commonService.log({
+        fileName: this.fileName,
+        functionName: 'getUnusualIPs',
+        msg: error,
+      });
+    }
+  }
 
 
   moveMap(event: google.maps.MapMouseEvent) {
