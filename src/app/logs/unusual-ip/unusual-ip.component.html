@@ -57,23 +57,24 @@
     <button type="button" class="btn-link fs-20 fw-600 pointer" (click)="resetHandler()" i18n="@@Reset">
       Reset
     </button>
-    <button type="button" class="btn-link fs-20 fw-600 mx-4 pointer" i18n="@@Submit">
+    <button type="button" class="btn-link fs-20 fw-600 mx-4 pointer" (click)="getUnusualIPs()" i18n="@@Submit">
       Submit
     </button>
   </div>
 
   <div class="card no-border m-2" *ngFor="let ip of unusualIPs">
     <div class="card-body d-flex" (click)="toggleMap(ip)">
-      <h3><strong>IP : </strong> {{ip.ip}}</h3>
+      <h3><strong>IP : </strong> {{ip.ipaddr}}</h3>
+      <h3><strong>Country : </strong> {{ip.country}}, <strong>City:</strong> {{ip.city}} </h3>
       <button class="btn map">
         <i class="fas fa-map-marker-alt fs-20 mb-2 text-danger"></i>
       </button>
     </div>
 
     <div *ngIf="selectedIP === ip">
-      <google-map class="m-2" height="250px" width="100%" [center]="ip.position" [zoom]="zoom"
+      <google-map class="m-2" height="250px" width="100%" [center]="{lat:ip.lat, lng:ip.long}" [zoom]="zoom"
         (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
-        <map-marker [position]="ip.position"></map-marker>
+        <map-marker [position]="{lat:ip.lat, lng:ip.long}"></map-marker>
       </google-map>
     </div>
 

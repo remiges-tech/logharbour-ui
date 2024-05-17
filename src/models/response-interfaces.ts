@@ -1,5 +1,6 @@
 import {
   LogEntry,
+  UnusualIPs,
 } from './common-interfaces';
 
 export interface AppListResp {
@@ -51,7 +52,9 @@ export interface DebugLogResp {
 }
 
 export interface UnusualIPResp {
-  data: string[];
+  data: {
+    unusualIPs: UnusualIPs[];
+  };
   status: string;
   statusCode: number;
   message: string;

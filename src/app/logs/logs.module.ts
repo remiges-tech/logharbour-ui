@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { ShowactivityLogComponent } from './showactivity-log/showactivity-log.component';
-import { LogsRoutingModule } from './logs-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HighpriLogComponent } from './highpri-log/highpri-log.component';
 import { DebugLogComponent } from './debug-log/debug-log.component';
@@ -28,7 +27,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
   ],
   imports: [
     NgxJsonViewerModule,
-    LogsRoutingModule,
     GoogleMapsModule,
     CommonModule,
     NgxPaginationModule,

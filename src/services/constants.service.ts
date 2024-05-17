@@ -10,7 +10,7 @@ export enum CONSTANTS {
   ACTIVITY_LOG_API = '/activitylog',
   HIGH_PRI_LOG_API = '/highprilog',
   DEBUG_LOG_API = '/debuglog',
-  UNUSUAL_IP_API = '/unusalip',
+  UNUSUAL_IP_API = '/unusualip',
   PLEASE_WAIT_PROCESSING_YOUR_DATA = 'Please wait, processing your data',
 }
 

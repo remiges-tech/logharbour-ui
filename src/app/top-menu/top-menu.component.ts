@@ -1,9 +1,9 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
+
 interface Locale {
   localeCode: string;
   label: string;
 }
-
 
 @Component({
   selector: 'app-top-menu',
@@ -13,7 +13,6 @@ interface Locale {
 export class TopMenuComponent {
   isDarkTheme:any;
   selectedLocale: string = this.locale;
-
 
   locales: Locale[] = [
     { localeCode: "en-US", label: "English" },
@@ -27,22 +26,17 @@ export class TopMenuComponent {
     this.currentTheme();
   }
 
-
-
   navigateToLocale(localeCode: string): void {
     this.selectedLocale = this.locale;
     const url = `/${localeCode}`; 
     window.location.href = url;  // Change the window location directly
   }
   
-
-
   currentTheme(){
     let currentTheme = localStorage.getItem('THEME') || 'light';
     this.isDarkTheme = currentTheme == 'dark';
     document.documentElement.setAttribute('data-theme',currentTheme)
   }
-
   
   changeTheme(){
     let theme = localStorage.getItem('THEME') || 'light';

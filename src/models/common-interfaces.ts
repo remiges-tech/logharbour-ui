@@ -61,6 +61,9 @@ export interface debugInfo{
 }
 
 export interface UnusualIPs {
-  ip: string;
-  position:google.maps.LatLngLiteral
+  city: string;
+  country: string;
+  ipaddr: string;
+  lat: any;
+  long: any;
 }
