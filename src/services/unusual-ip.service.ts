@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
-import { DataChangeLogReq, UnusualIPReq } from 'src/models/request-interfaces';
+import { environment } from 'src/environments/environment';
+import { UnusualIPReq } from 'src/models/request-interfaces';
 import { CommonService } from './common.service';
 import { HttpService } from './http.service';
 import * as Enums from './constants.service';

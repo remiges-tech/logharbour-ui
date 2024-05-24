@@ -6,6 +6,7 @@ import { DebugLogComponent } from './logs/debug-log/debug-log.component';
 import { HighpriLogComponent } from './logs/highpri-log/highpri-log.component';
 import { ShowactivityLogComponent } from './logs/showactivity-log/showactivity-log.component';
 import { UnusualIpComponent } from './logs/unusual-ip/unusual-ip.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: DatachangeLogComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
 })
 export class AppRoutingModule { }

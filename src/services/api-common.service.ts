@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { HttpService } from './http.service';
 import { CONSTANTS } from './constants.service';
 import { CommonService } from './common.service';

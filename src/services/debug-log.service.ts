@@ -3,7 +3,7 @@ import { HttpService } from './http.service';
 import { CommonService } from './common.service';
 import * as Enums from './constants.service';
 import { DebugLogReq } from 'src/models/request-interfaces';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
